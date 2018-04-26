@@ -1,21 +1,15 @@
-import math
-
-
-class HolderOfValues:
-    pass
+from math import *
 
 
 class Function:
 
-    def __init__(self, string):
-        if not string and not type(string) == str:
+    def __init__(self, function):
+        if not function and not type(function) == str:
             raise Exception("a string representation of the function is required")
-        self.function = string.replace("^", "**")
-        self.holder = HolderOfValues()
+        self.function = function
 
     def evaluate(self, values):
         equation = self.function
         for key, value in zip(values.keys(), values.values()):
-            setattr(self.holder, key, value)
-            equation = str(equation).replace(key, "self.holder." + key)
+            equation = str(equation).replace(key, str(value))
         return eval(equation)
