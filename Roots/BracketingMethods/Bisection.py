@@ -1,12 +1,15 @@
 from Roots.Bracketer import Bracketer
 import numpy as np
 
-class Bisection (Bracketer):
+
+class Bisection(Bracketer):
 
     def __init__(self, function, error=0.0001, max_iterations=50):
         super().__init__(function, error, max_iterations)
 
     def do(self, lower_bound, upper_bound):
+        self.upper = upper_bound
+        self.lower = lower_bound
         return self.bisect(lower_bound, upper_bound)
 
     def bisect(self, lower_bound, upper_bound):

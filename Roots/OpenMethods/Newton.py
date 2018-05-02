@@ -8,6 +8,7 @@ class Newton(OpenMethod):
         super().__init__(function, derivative, second_derivative, multiplicity, error, max_iterations, gx)
 
     def do(self, xi):
+        self.initial = xi
         if self.second_derivative is not None:
             return self.newton_method2(xi)
         elif self.multiplicity is not 1:
@@ -28,6 +29,7 @@ class Newton(OpenMethod):
 
             record = np.array([itr, xi, f_xi, derivative_xi, root, self.compute(root), ea, rel])
             data.append(record)
+            self.root = root
             if ea <= self.error:
                 return data
             old_root = root
@@ -49,7 +51,7 @@ class Newton(OpenMethod):
 
             record = np.array([itr, xi, f_xi, derivative_xi, root, self.compute(root), ea, rel])
             data.append(record)
-
+            self.root = root
             if ea <= self.error:
                 return data
             old_root = root
@@ -70,6 +72,7 @@ class Newton(OpenMethod):
             rel = abs(ea / root) * 100
             record = np.array([itr, xi, f_xi, derivative_xi, root, self.compute(root), ea, rel])
             data.append(record)
+            self.root = root
             if ea <= self.error:
                 return data
             old_root = root

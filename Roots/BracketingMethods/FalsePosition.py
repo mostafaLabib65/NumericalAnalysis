@@ -8,6 +8,8 @@ class FalsePosition(Bracketer):
         super().__init__(function, error, max_iterations)
 
     def do(self, lower_bound, upper_bound):
+        self.lower = lower_bound
+        self.upper = upper_bound
         return self.false_pos(lower_bound, upper_bound)
 
     def false_pos(self, lower_bound, upper_bound):

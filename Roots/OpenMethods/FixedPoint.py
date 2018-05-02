@@ -8,6 +8,7 @@ class FixedPoint(OpenMethod):
         super().__init__(function, derivative, second_derivative, multiplicity, error, max_iterations, gx)
 
     def do(self, xi):
+        self.initial = xi
         if self.gx is None:
             self.function += " + x"
         return self.fixed_point(xi)
@@ -28,7 +29,7 @@ class FixedPoint(OpenMethod):
 
             record = np.array(itr, xi, root, self.compute(root), ea, rel)
             data.append(record)
-
+            self.root = root
             if ea <= self.error:
                 return root, itr, rel
             old_root = root

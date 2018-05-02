@@ -8,8 +8,7 @@ class Function:
             raise Exception("a string representation of the function is required")
         self.function = function
 
-    def evaluate(self, values):
+    def evaluate(self, value):
         equation = self.function
-        for key, value in zip(values.keys(), values.values()):
-            equation = str(equation).replace(key, str(value))
+        equation = str(equation).replace("x", str(value))
         return eval(equation)

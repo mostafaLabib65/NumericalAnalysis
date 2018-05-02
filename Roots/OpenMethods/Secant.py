@@ -8,6 +8,7 @@ class Secant(OpenMethod):
         super().__init__(function, derivative, second_derivative, multiplicity, error, max_iterations, gx)
 
     def do(self, xi, xi_1):
+        self.initial = max(abs(xi),abs(xi_1))
         return self.secant(xi, xi_1)
 
     def secant(self, xi, xi_1):
@@ -28,6 +29,7 @@ class Secant(OpenMethod):
 
             record = np.array([itr, xi_1, f_xi_1, xi, f_xi, root, self.compute(root), ea, rel])
             data.append(record)
+            self.root = root
             if ea <= self.error:
                 return data
             xi_1 = xi

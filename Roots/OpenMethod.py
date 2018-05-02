@@ -1,4 +1,5 @@
 import abc
+import numpy as np
 
 
 class OpenMethod:
@@ -12,19 +13,33 @@ class OpenMethod:
         self.error = error
         self.max_iterations = max_iterations
         self.gx = gx
+        self.initial = 0
+        self.root = 0
 
     def compute(self, xr):
-        return self.function.evaluate({"x": xr})
+        return self.function.evaluate(xr)
 
     def compute_derivative(self, x0):
         if self.derivative is not None:
-            return self.derivative.evaluate({"x": x0})
+            return self.derivative.evaluate(x0)
         return None
 
     def compute_second_derivative(self, x0):
         if self.second_derivative is not None:
-            return self.second_derivative.evaluate({"x": x0})
+            return self.second_derivative.evaluate(x0)
         return None
+
+    def get_plot(self):
+        length = self.initial - self.root
+        y = []
+        if length > 0:
+            x = np.arange(self.root - length - 1, self.initial + 1, 0.1)
+        else:
+            x = np.arange(self.initial - 1, self.root + length + 1, 0.1)
+        for i in x:
+            y.append(self.compute(i))
+
+        return x, y
 
     @abc.abstractclassmethod
     def do(self, *args):
