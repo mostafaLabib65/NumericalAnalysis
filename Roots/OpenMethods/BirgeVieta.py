@@ -1,4 +1,4 @@
-from OpenMethod import OpenMethod
+from Roots.OpenMethod import OpenMethod
 
 
 class BirgeVieta(OpenMethod):

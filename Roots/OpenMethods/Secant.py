@@ -1,4 +1,5 @@
-from OpenMethod import OpenMethod
+from Roots.OpenMethod import OpenMethod
+import numpy as np
 
 
 class Secant(OpenMethod):
@@ -11,6 +12,7 @@ class Secant(OpenMethod):
 
     def secant(self, xi, xi_1):
         old_root, itr, root, rel = 0, 0, 0, 0
+        data = []
         while itr < self.max_iterations:
 
             f_xi = self.compute(xi)
@@ -23,10 +25,13 @@ class Secant(OpenMethod):
 
             ea = abs(root - old_root)
             rel = abs(ea / root) * 100
+
+            record = np.array([itr, xi_1, f_xi_1, xi, f_xi, root, self.compute(root), ea, rel])
+            data.append(record)
             if ea <= self.error:
-                return root, itr, rel
+                return data
             xi_1 = xi
             old_root = root
             xi = root
             itr = itr + 1
-        return root, itr, rel
+        return data

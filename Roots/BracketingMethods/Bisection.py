@@ -1,5 +1,5 @@
-from Bracketer import Bracketer
-
+from Roots.Bracketer import Bracketer
+import numpy as np
 
 class Bisection (Bracketer):
 
@@ -16,7 +16,7 @@ class Bisection (Bracketer):
 
         if f_lower * f_upper > 0:
             raise Exception("No valid roots in this interval")
-
+        data = []
         while itr < self.max_iterations:
             root = (lower_bound + upper_bound) / 2
             f_lower = self.compute(lower_bound)
@@ -24,8 +24,12 @@ class Bisection (Bracketer):
 
             ea = abs(root - old_root)
             rel = abs(ea / root) * 100
+
+            record = np.array([itr, lower_bound, f_lower, upper_bound, f_upper, root, f_root, ea, rel])
+            data.append(record)
+
             if ea < self.error and itr > 1:
-                return root, itr, rel
+                return data
 
             cond = f_lower * f_root
 
@@ -38,4 +42,4 @@ class Bisection (Bracketer):
                 return root, itr, rel
 
             itr = itr + 1
-        return root, itr, rel
+        return data

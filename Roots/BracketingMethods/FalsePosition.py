@@ -1,4 +1,5 @@
-from Bracketer import Bracketer
+from Roots.Bracketer import Bracketer
+import numpy as np
 
 
 class FalsePosition(Bracketer):
@@ -12,6 +13,9 @@ class FalsePosition(Bracketer):
     def false_pos(self, lower_bound, upper_bound):
         itr, old_root, root, rel = 0, 0, 0, 0
         lower_bound_stuck, upper_bound_stuck = 0, 0
+
+        data = []
+
         while itr < self.max_iterations:
             f_lower = self.compute(lower_bound)
             f_upper = self.compute(upper_bound)
@@ -30,8 +34,12 @@ class FalsePosition(Bracketer):
 
             ea = abs(root - old_root)
             rel = abs(ea / root) * 100
+
+            record = np.array([itr, lower_bound, f_lower, upper_bound, f_upper, root, f_root, ea, rel])
+            data.append(record)
+
             if ea < self.error and itr > 1:
-                return root, itr, rel
+                return data
 
             cond = f_root * f_lower
 
@@ -46,4 +54,4 @@ class FalsePosition(Bracketer):
                 return root, itr, rel
 
             itr = itr + 1
-        return root, itr, rel
+        return data

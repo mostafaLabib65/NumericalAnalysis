@@ -9,7 +9,7 @@ class Differentiator:
         self.formulate()
 
     def get_function(self):
-        return Function(str(self.function))
+        return Function(self.function)
 
     def get_first_derivative(self):
         return Function(str(diff(self.function, self.x)))

@@ -1,4 +1,5 @@
-from OpenMethod import OpenMethod
+from Roots.OpenMethod import OpenMethod
+import numpy as np
 
 
 class FixedPoint(OpenMethod):
@@ -19,13 +20,18 @@ class FixedPoint(OpenMethod):
         if abs(derivative) < 1:
             raise Exception("Function will diverge")
 
+        data = []
         while itr < self.max_iterations:
             root = self.function.compute(xi)
             ea = abs(root - old_root)
             rel = abs(ea / root) * 100
+
+            record = np.array(itr, xi, root, self.compute(root), ea, rel)
+            data.append(record)
+
             if ea <= self.error:
                 return root, itr, rel
             old_root = root
             xi = root
             itr = itr + 1
-        return root, rel, itr
+        return data
