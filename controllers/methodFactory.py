@@ -1,4 +1,4 @@
-from models.fixedpointplot import FixedPointPlot
+from models.BisectionPlot import BisectionPlot
 from views.Result import Result
 
 
@@ -8,11 +8,13 @@ class DummyMethod(object):
         super().__init__()
         self.observer = observer
         self.eq_str = eq_str
-        ys = [1, .81, .43, .25, .04, 0, .04, .25, .43, .81, 1]
-        xs = [-1, -.9, -.656, -.5, -.2, 0, .2, .5, .656, .9, 1]
-        gx = [0.81, .656, .43, .1853, 0.03433, 0]
-        x = [.9, 0.81, .656, .43, .1853, 0.03433]
-        self.fig = FixedPointPlot(xs, ys, gx, x, *args, **kwargs)
+        ys = [-1, 25, -40, -30, -25, -18, 0, 15, -2, 23, 14, 0, 6, 8]
+        xs = [-10, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15]
+        xl = [0, 0, 2.25, 3.5]
+        xu = [9, 4.5, 4.5, 4.5, 4.5]
+        xr = [4.5, 2.25, 3.5, 4]
+        self.fig = BisectionPlot(self, xs, ys, xr, xl, xu, *args, **kwargs)
+
         self.result = Result(solution="I am Groot", status="I am status Groot", figure=self.fig, iterations=3,
                              message="We are groot")
 

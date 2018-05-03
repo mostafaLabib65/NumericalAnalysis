@@ -8,7 +8,7 @@ from models.PlotFigure import PlotFigure
 style.use('fivethirtyeight')
 
 
-class FixedPointPlot(PlotFigure):
+class SecantPlot(PlotFigure):
     def __init__(self, xs, ys, gx, x, app=None, parent=None, width=5, height=4, dpi=100):
         PlotFigure.__init__(self, parent, width, height, dpi)
         self.animateTimer = QtCore.QTimer(self)
