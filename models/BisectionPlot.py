@@ -9,7 +9,7 @@ style.use('fivethirtyeight')
 
 
 class BisectionPlot(PlotFigure):
-    def __init__(self, xs, ys,xr, xl, xu, app=None, parent=None, width=5, height=4, dpi=100):
+    def __init__(self, xs,ys,xr, xl, xu, app=None, parent=None, width=5, height=4, dpi=100):
         PlotFigure.__init__(self, parent, width, height, dpi)
         self.animateTimer = QtCore.QTimer(self)
         self.animateTimer.timeout.connect(self.update_figure)
@@ -22,12 +22,11 @@ class BisectionPlot(PlotFigure):
         self.parent = parent
         self.app = app
         self.axes.plot(self.xs, self.ys, label='function', color='r', lw=3)
-        self.axes.plot(self.xs, self.xs, label='x=y', color='y', lw=3)
-        self.axes.legend
+        self.axes.legend()
 
 
     def animate(self):
-        self.animateTimer.start(100)
+        self.animateTimer.start(1000)
 
     def compute_initial_figure(self):
         self.axes.axvline(x=0, lw=4, color='k', label='axes')
@@ -51,6 +50,8 @@ class BisectionPlot(PlotFigure):
                 self.animateLine(self.xu[i], self.xu[i + 1], self.xl[i], self.xs, self.ys)
             else:
                 self.animateLine(self.xl[i], self.xl[i + 1], self.xu[i], self.xs, self.ys)
+            self.axes.axvline(x=self.xr[i + 1], label='Xr', color='g', linestyle='dashed', lw=1)
+        self.draw()
 
         self.animateTimer.blockSignals(False)
 
@@ -58,12 +59,15 @@ class BisectionPlot(PlotFigure):
     def animateLine(self,x1, x2, constX, xs, ys):
         self.axes.cla()
         x = np.linspace(x1, x2, 20)
-        self.axes.set(xlabel='x', ylabel='y', title='Bisection method')
-        self.axes.axvline(x=0, lw=4, color='k', label='axes')
-        self.axes.axhline(y=0, lw=4, color='k')
-        self.axes.plot(xs, ys, label='function', color='r', lw=3)
+
         for n in range(len(x)):
+            self.axes.cla()
+            self.axes.set(xlabel='x', ylabel='y', title='Bisection method')
+            self.axes.axvline(x=0, lw=4, color='k', label='axes')
+            self.axes.axhline(y=0, lw=4, color='k')
+            self.axes.plot(xs, ys, label='function', color='r', lw=3)
             self.axes.axvline(x[n], lw=1, color='b', linestyle='dashed', label='vertical')
             self.axes.axvline(constX, lw=1, color='b', linestyle='dashed', label='vertical')
             self.draw()
             self.app.processEvents()
+
