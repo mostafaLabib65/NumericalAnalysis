@@ -3,7 +3,7 @@ from views.Result import Result
 
 
 class DummyMethod(object):
-    #example of a method
+    # example of a method
     def __init__(self, observer, eq_str, *args, **kwargs):
         super().__init__()
         self.observer = observer
@@ -13,7 +13,7 @@ class DummyMethod(object):
         xl = [0, 0, 2.25, 3.5]
         xu = [9, 4.5, 4.5, 4.5, 4.5]
         xr = [4.5, 2.25, 3.5, 4]
-        self.fig = BisectionPlot(self, xs, ys, xr, xl, xu, *args, **kwargs)
+        self.fig = BisectionPlot(xs, ys, xr, xl, xu, *args, **kwargs)
 
         self.result = Result(solution="I am Groot", status="I am status Groot", figure=self.fig, iterations=3,
                              message="We are groot")

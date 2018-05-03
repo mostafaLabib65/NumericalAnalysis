@@ -9,7 +9,7 @@ style.use('fivethirtyeight')
 
 
 class BisectionPlot(PlotFigure):
-    def __init__(self, xs, ys,xr, xl, xu, app=None, parent=None, width=5, height=4, dpi=100):
+    def __init__(self, xs, ys, xr, xl, xu, app=None, parent=None, width=5, height=4, dpi=100):
         PlotFigure.__init__(self, parent, width, height, dpi)
         self.animateTimer = QtCore.QTimer(self)
         self.animateTimer.timeout.connect(self.update_figure)
@@ -25,7 +25,6 @@ class BisectionPlot(PlotFigure):
         self.axes.plot(self.xs, self.xs, label='x=y', color='y', lw=3)
         self.axes.legend
 
-
     def animate(self):
         self.animateTimer.start(100)
 
@@ -37,7 +36,7 @@ class BisectionPlot(PlotFigure):
         self.axes.set_title('Bisection point method')
 
     def points_generator(self):
-        for i in range(0,len(self.xr)):
+        for i in range(0, len(self.xr)):
             yield i
 
     def update_figure(self):
@@ -54,8 +53,7 @@ class BisectionPlot(PlotFigure):
 
         self.animateTimer.blockSignals(False)
 
-
-    def animateLine(self,x1, x2, constX, xs, ys):
+    def animateLine(self, x1, x2, constX, xs, ys):
         self.axes.cla()
         x = np.linspace(x1, x2, 20)
         self.axes.set(xlabel='x', ylabel='y', title='Bisection method')
