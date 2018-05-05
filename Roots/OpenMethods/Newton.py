@@ -1,6 +1,6 @@
 from Roots.OpenMethod import OpenMethod
 import numpy as np
-
+from math import e
 
 class Newton(OpenMethod):
     def __init__(self, function, derivative=None, second_derivative=None, multiplicity=1, error=0.0001
@@ -21,9 +21,9 @@ class Newton(OpenMethod):
         while itr < self.max_iterations:
             derivative_xi = self.compute_derivative(xi)
             if derivative_xi == 0:
-                raise Exception("Division by zero", root, itr, rel)
+                raise Exception("Division by zero", data)
             f_xi = self.compute(xi)
-            root = xi - (f_xi / derivative_xi)
+            root = float(xi - (f_xi / derivative_xi))
             ea = abs(root - old_root)
             rel = abs(ea / root) * 100
 
@@ -43,9 +43,9 @@ class Newton(OpenMethod):
         while itr < self.max_iterations:
             derivative_xi = self.compute_derivative(xi)
             if derivative_xi == 0:
-                raise Exception("Division by zero", root, itr, rel)
+                raise Exception("Division by zero", data)
             f_xi = self.compute(xi)
-            root = xi - self.multiplicity * (f_xi / derivative_xi)
+            root = float(xi - self.multiplicity * (f_xi / derivative_xi))
             ea = abs(root - old_root)
             rel = abs(ea / root) * 100
 
@@ -65,9 +65,9 @@ class Newton(OpenMethod):
         while itr < self.max_iterations:
             derivative_xi = ((self.compute_derivative(xi)) ** 2 - self.compute_second_derivative(xi) * self.compute(xi))
             if derivative_xi == 0:
-                raise Exception("Division by zero", root, itr, rel)
+                raise Exception("Division by zero", data)
             f_xi = (self.compute(xi) * self.compute_derivative(xi))
-            root = xi - (f_xi / derivative_xi)
+            root = float(xi - (f_xi / derivative_xi))
             ea = abs(root - old_root)
             rel = abs(ea / root) * 100
             record = np.array([itr, xi, f_xi, derivative_xi, root, self.compute(root), ea, rel])

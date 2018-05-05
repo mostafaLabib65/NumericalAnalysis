@@ -1,4 +1,5 @@
 from math import *
+import sympy as sp
 
 
 class Function:
@@ -9,6 +10,5 @@ class Function:
         self.function = function
 
     def evaluate(self, value):
-        equation = self.function
-        equation = str(equation).replace("x", str(value))
-        return eval(equation)
+        x = sp.symbols('x')
+        return sp.sympify(self.function).subs(x, value)
