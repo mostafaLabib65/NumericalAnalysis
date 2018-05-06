@@ -46,14 +46,14 @@ class FalsePosition(Bracketer):
             cond = f_root * f_lower
 
             old_root = root
-            if cond < 0:
+            if f_root > 0:
                 upper_bound = root
                 upper_bound_stuck += 1
-            elif f_root > 0:
+            elif f_root < 0:
                 lower_bound = root
                 lower_bound_stuck += 1
             else:
-                return root, itr, rel
+                return data
 
             itr = itr + 1
         return data
