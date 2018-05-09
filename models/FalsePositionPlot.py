@@ -56,8 +56,8 @@ class FalsePositionPlot(PlotFigure):
 
     def animateLine(self,x1, x2, y1, y2, xr, xs, ys):
         self.axes.cla()
-        y = np.linspace(y1, y2, 10)
-        x = np.linspace(x1, x2, 10)
+        y = np.linspace(float(y1), float(y2), 10)
+        x = np.linspace(float(x1), float(x2), 10)
         for n in range(len(x) + 1):
             self.axes.cla()
             self.axes.axvline(x=0, lw=2, color='k')

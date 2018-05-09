@@ -31,7 +31,7 @@ class FalsePosition(Bracketer):
                 root = (lower_bound + upper_bound) / 2
                 lower_bound_stuck, upper_bound_stuck = 0, 0
             else:
-                root = (lower_bound * f_upper - upper_bound * f_lower) / (f_upper - f_lower)
+                root = float((lower_bound * f_upper - upper_bound * f_lower) / (f_upper - f_lower))
             f_root = self.compute(root)
 
             ea = abs(root - old_root)

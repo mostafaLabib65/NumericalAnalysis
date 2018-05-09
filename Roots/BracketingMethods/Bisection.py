@@ -42,7 +42,7 @@ class Bisection(Bracketer):
             elif cond > 0:
                 lower_bound = root
             else:
-                return root, itr, rel
+                return data
 
             itr = itr + 1
         return data

@@ -44,6 +44,11 @@ class BisectionPlot(PlotFigure):
         try:
             i = next(self.generator)
         except StopIteration:
+            self.axes.axvline(self.xr[len(self.xr) - 1], lw=1, color='g', linestyle='dashed', label='vertical')
+            self.axes.axvline(self.xl[len(self.xr) - 1], lw=1, color='b', linestyle='dashed', label='vertical')
+            self.axes.axvline(self.xu[len(self.xr) - 1], lw=1, color='b', linestyle='dashed', label='vertical')
+            self.draw()
+            self.axes.legend()
             return
         if i != len(self.xr) - 1:
             if self.xl[i] == self.xl[i + 1]:

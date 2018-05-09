@@ -46,7 +46,7 @@ class MainWindow(QMainWindow, Observer):
 
     def update_ui(self, result):
         self.setStatusTip(result.status)
-        self.solutionBrowser.setText(result.solution)
+        self.solutionBrowser.setText(result.solution + "\n" + str(result.iterations))
         self.messageLabel.setText(result.message)
         self.plotLayout.removeWidget(self.fig)
         self.fig = result.figure

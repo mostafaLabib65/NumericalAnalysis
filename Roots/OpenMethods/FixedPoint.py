@@ -5,7 +5,7 @@ import sympy as sp
 
 class FixedPoint(OpenMethod):
     def __init__(self, function, derivative=None, error=0.0001, max_iterations=50, gx=None):
-        super().__init__(function, derivative, error, max_iterations, gx)
+        super().__init__(function, derivative, error=error, max_iterations=max_iterations, gx=gx)
 
     def do(self, xi):
         self.initial = xi
@@ -20,12 +20,12 @@ class FixedPoint(OpenMethod):
         if self.gx is None:
             derivative += 1
 
-        if abs(derivative) < 1:
+        if abs(derivative) > 1:
             raise Exception("Function will diverge")
 
         data = []
         while itr < self.max_iterations:
-            root = self.compute(xi)
+            root = float(self.compute(xi))
             ea = abs(root - old_root)
             rel = abs(ea / root) * 100
 
