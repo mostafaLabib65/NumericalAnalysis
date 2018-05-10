@@ -10,7 +10,8 @@ from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QMainWindow, QDockWidget, QVBoxLayout, QPushButton
 from qtpy import QtGui, QtCore
 
-from controllers.methodFactory import MethodFactory
+from controllers.rootsMethodFactory import RootsMethodFactory
+from controllers.gaussGordanFactory import GaussGordan
 from models.fixedpointplot import FixedPointPlot
 from views.Observer import Observer
 from views.FileParameters import FileParameters as fp
@@ -22,6 +23,7 @@ x = [.9, 0.81, .656, .43, .1853, 0.03433]
 class MainWindow(QMainWindow, Observer):
     stepSolveFlag = 0
     choosedFileFlag = 0
+    gaussGordanFlag = 0
     parameters = fp(method="", equation="",start="", End= "",tolerance="", maxItr="")
     result = []
     index = -1
@@ -36,9 +38,11 @@ class MainWindow(QMainWindow, Observer):
         # self.plotLayout.insertWidget(0, self.fig)
         self.animatebtn.clicked.connect(self.animate_btn_clicked)
         self.solveBtn.clicked.connect(self.solve_btn_clicked)
-        self.methodsCombo.currentTextChanged.connect(self.on_combobox_changed)
+        self.methodsCombo.currentTextChanged.connect(self.on_methodsCombo_changed)
+        self.modes.currentTextChanged.connect(self.on_modesCombo_changed)
         self.step.clicked.connect(self.step_btn_clicked)
-
+        self.gaussSolve.clicked.connect(self.gauss_Btn_Clicked)
+        self.GaussWidget.setHidden(not self.GaussWidget.isHidden())
         self.next.clicked.connect(self.update_step_ui)
         self.chooseFile.clicked.connect(self.readFromFile)
         self.show()
@@ -51,10 +55,10 @@ class MainWindow(QMainWindow, Observer):
         if(self.equationInput.text() == ""):
             return 1
         elif((self.methodsCombo.currentText() == "Bisection" or self.methodsCombo.currentText() == "False-Position" or self.methodsCombo.currentText() == "Secant")
-        and (self.start.text() == "" or self.end.text() == "")):
+        and (self.start_2.text() == "" or self.end_2.text() == "")):
             return 2
         elif((self.methodsCombo.currentText() == "Newton" or self.methodsCombo.currentText() == "Fixed Point" or self.methodsCombo.currentText() == "Bierge Vieta") and
-         self.end.text() == ""):
+         self.end_2.text() == ""):
             return 3
         else:
             return 4
@@ -74,16 +78,16 @@ class MainWindow(QMainWindow, Observer):
             elif(status == 3):
                 self.messageLabel.setText("Required input is missed asshole")
             elif(status == 4):
-                method = MethodFactory.acquire_method(self.methodsCombo.currentText(), self, self.equationInput.text(),
-                                                  self.end.text(),self.start.text(),self.tolerance.text(),self.maxIter.text(),parent=self.dockWidget, app=self.app)
+                method = RootsMethodFactory.acquire_method(self.methodsCombo.currentText(), self, self.equationInput.text(),
+                                                           self.end_2.text(), self.start_2.text(), self.tolerance.text(), self.maxIter.text(), parent=self.dockWidget, app=self.app)
                 method.execute()
         else:
             self.choosedFileFlag == 0
             self.next.setDisabled(True)
             stepSolveFlag = 0
-            method = MethodFactory.acquire_method(self.parameters.method, self, self.parameters.equation,
-                                                  self.parameters.start, self.parameters.End,self.parameters.tolerance,self.parameters.maxItr ,parent=self.dockWidget,
-                                                  app=self.app)
+            method = RootsMethodFactory.acquire_method(self.parameters.method, self, self.parameters.equation,
+                                                       self.parameters.start, self.parameters.End, self.parameters.tolerance, self.parameters.maxItr, parent=self.dockWidget,
+                                                       app=self.app)
             method.execute()
 
     def step_btn_clicked(self):
@@ -99,23 +103,23 @@ class MainWindow(QMainWindow, Observer):
             elif (status == 3):
                 self.messageLabel.setText("Required input is missed asshole")
             elif (status == 4):
-                method = MethodFactory.acquire_method(self.methodsCombo.currentText(), self, self.equationInput.text(),
-                                                      self.end.text(), self.start.text(), self.tolerance.text(),
-                                                      self.maxIter.text(), parent=self.dockWidget, app=self.app)
+                method = RootsMethodFactory.acquire_method(self.methodsCombo.currentText(), self, self.equationInput.text(),
+                                                           self.end_2.text(), self.start_2.text(), self.tolerance.text(),
+                                                           self.maxIter.text(), parent=self.dockWidget, app=self.app)
                 self.next.setEnabled(True)
                 method.execute()
         else:
             self.choosedFileFlag = 0
             stepSolveFlag = 1
-            method = MethodFactory.acquire_method(self.parameters.method, self, self.parameters.equation,
-                                                  self.parameters.start, self.parameters.End, self.parameters.tolerance,
-                                                  self.parameters.maxItr, parent=self.dockWidget,
-                                                  app=self.app)
+            method = RootsMethodFactory.acquire_method(self.parameters.method, self, self.parameters.equation,
+                                                       self.parameters.start, self.parameters.End, self.parameters.tolerance,
+                                                       self.parameters.maxItr, parent=self.dockWidget,
+                                                       app=self.app)
             self.next.setEnabled(True)
             method.execute()
 
     def notify(self, result):
-        if(stepSolveFlag == 0):
+        if(self.stepSolveFlag == 0):
             self.update_ui(result)
         else:
             self.result = result
@@ -123,26 +127,34 @@ class MainWindow(QMainWindow, Observer):
             self.update_step_ui()
 
     def notifyFileParameters(self,parameters):
-        self.parameters = parameters
-        self.messageLabel.setText("File loaded")
-        self.equationInput.setText(parameters.equation)
-        index = self.methodsCombo.findText(parameters.method, QtCore.Qt.MatchFixedString)
-        if index >= 0:
-            self.methodsCombo.setCurrentIndex(index)
-        self.end.setText(parameters.start)
-        self.start.setText(parameters.End)
-        self.tolerance.setText(parameters.tolerance)
-        self.maxIter.setText(parameters.maxItr)
+        if(self.gaussGordanFlag == 0):
+            self.parameters = parameters
+            self.messageLabel.setText("File loaded")
+            self.equationInput.setText(parameters.equation)
+            index = self.methodsCombo.findText(parameters.method, QtCore.Qt.MatchFixedString)
+            if index >= 0:
+                self.methodsCombo.setCurrentIndex(index)
+            self.end_2.setText(parameters.start)
+            self.start_2.setText(parameters.End)
+            self.tolerance.setText(parameters.tolerance)
+            self.maxIter.setText(parameters.maxItr)
+        elif(self.gaussGordanFlag == 1):
+            for i in self.parameters.equation:
+                self.gaussInput.append(i + "\n")
         self.update()
 
 
     def update_ui(self, result):
         self.setStatusTip(result.status)
-        self.solutionBrowser.setText(str(result.solution) + "\n" + str(result.iterations))
+        if(self.gaussGordanFlag == 0):
+            self.solutionBrowser.setText(str(result.solution) + "\n" + str(result.iterations))
+        elif(self.gaussGordanFlag == 1):
+            self.gaussSolution.setText(str(result.solution))
         self.messageLabel.setText(result.message)
-        self.plotLayout.removeWidget(self.fig)
-        self.fig = result.figure
-        self.plotLayout.insertWidget(0, self.fig)
+        if(self.gaussGordanFlag == 0):
+            self.plotLayout.removeWidget(self.fig)
+            self.fig = result.figure
+            self.plotLayout.insertWidget(0, self.fig)
         if(self.methodsCombo.currentText() != "Bierge Vieta"):
             self.animatebtn.setEnabled(True)
         self.update()
@@ -170,47 +182,70 @@ class MainWindow(QMainWindow, Observer):
         self.animatebtn.setEnabled(True)
         self.update()
 
-    def on_combobox_changed(self):
+    def on_methodsCombo_changed(self):
         if (self.methodsCombo.currentText() == "Bisection" or self.methodsCombo.currentText() == "False-Position"):
             self.interval.setText("interval")
-            self.start.setEnabled(True)
-            self.start.show()
-            self.From.setText("From")
-            self.To.setText("To")
-            self.To.show()
+            self.start_2.setEnabled(True)
+            self.start_2.show()
+            self.From_2.setText("From")
+            self.To_2.setText("To")
+            self.To_2.show()
             self.itr.setText("Max iterations")
 
         elif (self.methodsCombo.currentText() == "Newton" or self.methodsCombo.currentText() == "Fixed Point" or self.methodsCombo.currentText() == "Bierge Vieta"):
             self.interval.setText("Point")
-            self.From.setText("X")
-            self.start.hide()
-            self.To.hide()
+            self.From_2.setText("X")
+            self.start_2.hide()
+            self.To_2.hide()
             self.itr.setText("Max iterations")
-            self.start.setDisabled(True)
+            self.start_2.setDisabled(True)
 
         elif (self.methodsCombo.currentText() == "Secant"):
             self.interval.setText("Points")
-            self.start.setEnabled(True)
-            self.start.show()
-            self.From.setText("X1")
-            self.To.setText("X2")
+            self.start_2.setEnabled(True)
+            self.start_2.show()
+            self.From_2.setText("X1")
+            self.To_2.setText("X2")
             self.itr.setText("Max iterations")
-            self.To.show()
+            self.To_2.show()
         elif(self.methodsCombo.currentText() == "General algorithm"):
             self.interval.setText("interval")
-            self.start.setEnabled(True)
-            self.start.show()
-            self.From.setText("From")
-            self.To.setText("To")
+            self.start_2.setEnabled(True)
+            self.start_2.show()
+            self.From_2.setText("From")
+            self.To_2.setText("To")
             self.itr.setText("Number of roots")
-            self.To.show()
+            self.To_2.show()
+
+    def on_modesCombo_changed(self):
+        if(self.modes.currentText() == "Roots"):
+            self.dockWidgetContents.setVisible(True)
+            self.gaussGordanFlag = 0
+            self.GaussWidget.setHidden(True)
+            self.RootsWidget.setVisible(True)
+        elif(self.modes.currentText() == "Gauss jourdan"):
+            self.dockWidgetContents.setHidden(True)
+            self.gaussGordanFlag = 1
+            self.RootsWidget.setHidden(True)
+            self.GaussWidget.setVisible(True)
+
+    def gauss_Btn_Clicked(self):
+        if (self.choosedFileFlag == 0):
+            method = GaussGordan.acquire_method(self,self.gaussInput.toPlainText())
+            method.execute()
+        else:
+            self.choosedFileFlag == 0
+            method = GaussGordan.acquire_method(self, self.parameters.equation)
+            method.execute()
 
     def readFromFile(self):
         global choosedFileFlag
         choosedFileFlag = 1
         filename = QtWidgets.QFileDialog.getOpenFileName(parent=self, caption='Open file')
-        reading = MethodFactory.readFromFile(filename[0],self)
-
+        if(self.gaussGordanFlag != 1):
+            reading = RootsMethodFactory.readFromFile(filename[0], self)
+        elif(self.gaussGordanFlag == 1):
+            reading = GaussGordan.readFromFile(filename[0], self)
 
 if __name__ == "__main__":
     import sys
@@ -219,3 +254,44 @@ if __name__ == "__main__":
     window = MainWindow(app)
     window.setupUi()
     sys.exit(app.exec_())
+
+
+''' def showRoots(self):
+        self.chooseFile.show()
+        self.methodsCombo.show()
+        self.label_2.show()
+        self.label.show()
+        self.equationInput.show()
+        self.interval.show()
+        self.From.show()
+        self.end.show()
+        self.To.show()
+        self.start.show()
+        self.tol.show()
+        self.tolerance.show()
+        self.itr.show()
+        self.maxIter.show()
+        self.solveBtn.show()
+        self.step.show()
+        self.solutionBrowser.show()
+        self.next.show()
+    def hideRoots(self):
+        self.chooseFile.hide()
+        self.methodsCombo.hide()
+        self.label_2.hide()
+        self.label.hide()
+        self.equationInput.hide()
+        self.interval.hide()
+        self.From.hide()
+        self.end.hide()
+        self.To.hide()
+        self.start.hide()
+        self.tol.hide()
+        self.tolerance.hide()
+        self.itr.hide()
+        self.maxIter.hide()
+        self.solveBtn.hide()
+        self.step.hide()
+        self.solutionBrowser.hide()
+        self.next.hide()
+        '''

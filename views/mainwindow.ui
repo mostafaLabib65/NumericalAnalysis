@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>952</width>
-    <height>606</height>
+    <width>1048</width>
+    <height>650</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,198 +18,288 @@
     <bool>true</bool>
    </property>
    <layout class="QGridLayout" name="gridLayout_2">
+    <item row="2" column="0">
+     <widget class="QWidget" name="GaussWidget" native="true">
+      <widget class="QWidget" name="formLayoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>9</y>
+         <width>551</width>
+         <height>261</height>
+        </rect>
+       </property>
+       <layout class="QFormLayout" name="formLayout_2">
+        <item row="0" column="1">
+         <widget class="QPushButton" name="gaussChooseFile">
+          <property name="text">
+           <string>ChooseFile</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="inputLabel">
+          <property name="text">
+           <string>Input</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QPushButton" name="gaussSolve">
+          <property name="text">
+           <string>Solve</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QTextBrowser" name="gaussSolution"/>
+        </item>
+        <item row="1" column="1">
+         <widget class="QTextEdit" name="gaussInput"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QWidget" name="RootsWidget" native="true">
+      <widget class="QWidget" name="layoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>552</width>
+         <height>761</height>
+        </rect>
+       </property>
+       <layout class="QFormLayout" name="formLayout">
+        <property name="leftMargin">
+         <number>15</number>
+        </property>
+        <property name="topMargin">
+         <number>15</number>
+        </property>
+        <property name="rightMargin">
+         <number>15</number>
+        </property>
+        <item row="0" column="1">
+         <widget class="QPushButton" name="chooseFile">
+          <property name="text">
+           <string>Choose File</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Method</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QComboBox" name="methodsCombo">
+          <item>
+           <property name="text">
+            <string>Bisection</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>False-Position</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Newton</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Fixed Point</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Secant</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Bierge Vieta</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>General algorithm</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Input</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QLineEdit" name="equationInput"/>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="interval">
+          <property name="text">
+           <string>Interval</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QLabel" name="From_2">
+            <property name="text">
+             <string>From</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="end_2"/>
+          </item>
+          <item>
+           <widget class="QLabel" name="To_2">
+            <property name="text">
+             <string>To</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="start_2"/>
+          </item>
+         </layout>
+        </item>
+        <item row="6" column="1">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLabel" name="tol">
+            <property name="text">
+             <string>Tolerance</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="tolerance"/>
+          </item>
+          <item>
+           <widget class="QLabel" name="itr">
+            <property name="text">
+             <string>Max iteration</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="maxIter"/>
+          </item>
+         </layout>
+        </item>
+        <item row="7" column="1">
+         <widget class="QPushButton" name="solveBtn">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>Solve</string>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="1">
+         <widget class="QPushButton" name="step">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="text">
+           <string>Step by step</string>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="1">
+         <widget class="QTextBrowser" name="solutionBrowser"/>
+        </item>
+        <item row="11" column="0">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="11" column="1">
+         <widget class="QPushButton" name="next">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Next</string>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="1">
+         <widget class="QLabel" name="messageLabel">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
     <item row="0" column="0">
-     <layout class="QFormLayout" name="formLayout">
-      <property name="leftMargin">
-       <number>15</number>
-      </property>
-      <property name="topMargin">
-       <number>15</number>
-      </property>
-      <property name="rightMargin">
-       <number>15</number>
-      </property>
-      <item row="0" column="1">
-       <widget class="QPushButton" name="chooseFile">
-        <property name="text">
-         <string>Choose File</string>
-        </property>
-       </widget>
+     <widget class="QComboBox" name="modes">
+      <item>
+       <property name="text">
+        <string>Roots</string>
+       </property>
       </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Input</string>
-        </property>
-       </widget>
+      <item>
+       <property name="text">
+        <string>Gauss jourdan</string>
+       </property>
       </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="interval">
-        <property name="text">
-         <string>Interval</string>
-        </property>
-       </widget>
+      <item>
+       <property name="text">
+        <string>Interpolation</string>
+       </property>
       </item>
-      <item row="4" column="1">
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <item>
-         <widget class="QLabel" name="From">
-          <property name="text">
-           <string>From</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="end"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="To">
-          <property name="text">
-           <string>To</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="start"/>
-        </item>
-       </layout>
-      </item>
-      <item row="5" column="1">
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <item>
-         <widget class="QLabel" name="tol">
-          <property name="text">
-           <string>Tolerance</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="tolerance"/>
-        </item>
-        <item>
-         <widget class="QLabel" name="itr">
-          <property name="text">
-           <string>Max iteration</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="maxIter"/>
-        </item>
-       </layout>
-      </item>
-      <item row="6" column="1">
-       <widget class="QPushButton" name="solveBtn">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="text">
-         <string>Solve</string>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="1">
-       <widget class="QPushButton" name="step">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="text">
-         <string>Step by step</string>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="1">
-       <widget class="QTextBrowser" name="solutionBrowser"/>
-      </item>
-      <item row="10" column="0">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="10" column="1">
-       <widget class="QPushButton" name="next">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>Next</string>
-        </property>
-       </widget>
-      </item>
-      <item row="11" column="1">
-       <widget class="QLabel" name="messageLabel">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>Method</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QLineEdit" name="equationInput"/>
-      </item>
-      <item row="1" column="1">
-       <widget class="QComboBox" name="methodsCombo">
-        <item>
-         <property name="text">
-          <string>Bisection</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>False-Position</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Newton</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Fixed Point</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Secant</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Bierge Vieta</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>General algorithm</string>
-         </property>
-        </item>
-       </widget>
-      </item>
-     </layout>
+     </widget>
     </item>
    </layout>
+   <zorder>modes</zorder>
+   <zorder>GaussWidget</zorder>
+   <zorder>RootsWidget</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>952</width>
+     <width>1048</width>
      <height>22</height>
     </rect>
    </property>

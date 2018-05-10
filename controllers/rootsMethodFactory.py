@@ -201,7 +201,7 @@ class General(object):
         self.observer.notify(self.result)
 
 
-class MethodFactory:
+class RootsMethodFactory:
     @staticmethod
     def acquire_method(method, observer, eq_str, start_str, end_str, tolerance, maxItr, *args, **kwargs):
         if (method == "Bisection"):
@@ -229,7 +229,8 @@ class MethodFactory:
             end = 0
         else:
             end = interval[1]
-        parameters = FileParameters(method = MethodFactory.getMethod(lines[1]), equation = lines[2], start = interval[0], End = end,tolerance=lines[4],maxItr= lines[5])
+        parameters = FileParameters(method = RootsMethodFactory.getMethod(lines[1]), equation = lines[2], start = interval[0], End = end, tolerance=lines[4], maxItr= lines[5])
+
         observer.notifyFileParameters(parameters)
 
     def getMethod(number):
