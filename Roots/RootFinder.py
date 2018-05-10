@@ -38,3 +38,14 @@ class RootFinder:
             roots.append(false_pos.do(i[0], i[1]))
 
         return roots
+
+    def compute(self, xr):
+        return self.function.evaluate(xr)
+
+    def get_plot(self):
+        x = np.arange(self.lower_bound, self.upper_bound+1, 0.1)
+        y = []
+        for i in x:
+         y.append(self.compute(i))
+
+        return x, y
