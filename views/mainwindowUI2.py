@@ -317,13 +317,17 @@ class MainWindow(QMainWindow, Observer):
         global chosenFileFlag
         chosenFileFlag = 1
         filename = QtWidgets.QFileDialog.getOpenFileName(parent=self, caption='Open file')
-        if self.gaussGordanFlag != 1 and self.interpolationFlag != 1:
-            reading = RootsMethodFactory.readFromFile(filename[0], self, widget=self.dockWidget, app=self.app)
-        elif self.gaussGordanFlag == 1:
-            reading = GaussGordan.readFromFile(filename[0], self, widget=self.dockWidget, app=self.app)
-        elif self.interpolationFlag == 1:
-            reading = InterPolationFactory.readFromFile(filename[0], self, widget=self.dockWidget, app=self.app)
-
+        try:
+            if self.gaussGordanFlag != 1 and self.interpolationFlag != 1:
+                reading = RootsMethodFactory.readFromFile(filename[0], self, widget=self.dockWidget, app=self.app)
+            elif self.gaussGordanFlag == 1:
+                reading = GaussGordan.readFromFile(filename[0], self, widget=self.dockWidget, app=self.app)
+            elif self.interpolationFlag == 1:
+                reading = InterPolationFactory.readFromFile(filename[0], self, widget=self.dockWidget, app=self.app)
+        except Exception as ex:
+            self.statusBar().clearMessage()
+            self.setStyleSheet(error_style)
+            self.statusBar().showMessage(ex.__str__())
 
 if __name__ == "__main__":
     import sys
