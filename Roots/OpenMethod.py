@@ -46,9 +46,6 @@ class OpenMethod:
         return
 
     def check(self, root, err):
-        if self.gx is None:
-            if not(abs(self.compute(root)) < 10*self.error):
-                raise Exception("Last found root is: " + str(root) + " with error:" + str(err))
-        else:
-            if not(abs(self.compute(root) - root) < 10*self.error):
-                raise Exception("Last found root is: " + str(root) + " with error:" + str(err))
+        if not(abs(self.compute(root)) < 10*self.error):
+            raise Exception("Last found root is: " + str(root) + " with error:" + str(err))
+
