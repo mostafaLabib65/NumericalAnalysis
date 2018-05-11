@@ -16,9 +16,13 @@ class Newton(OpenMethod):
         return self.newton(xi)
 
     def newton(self, xi):
-        old_root, itr, root, rel = 0, 0, 0, 0
+        old_root, itr, root, rel, divergence_count = 0, 0, 0, 0, 0
         data = []
         while itr < self.max_iterations:
+
+            if divergence_count > 15:
+                raise Exception("Method is diverging", data)
+
             derivative_xi = self.compute_derivative(xi)
             if derivative_xi == 0:
                 raise Exception("Division by zero", data)
@@ -30,6 +34,10 @@ class Newton(OpenMethod):
             record = np.array([itr, xi, f_xi, derivative_xi, root, self.compute(root), ea, rel])
             data.append(record)
             self.root = root
+
+            if abs(root) > abs(old_root) and itr > 0:
+                divergence_count += 1
+
             if ea <= self.error:
                 return data
             old_root = root

@@ -13,9 +13,13 @@ class BirgeVieta(OpenMethod):
         return self.birge_vieta(xi)
 
     def birge_vieta(self, xi):
-        old_root, itr, root, rel = 0, 0, 0, 0
+        old_root, itr, root, rel, divergence_count = 0, 0, 0, 0, 0
         data = []
         while itr < self.max_iterations:
+
+            if divergence_count > 15:
+                raise Exception("Method is diverging", data)
+
             b_list = self.get_b(xi)
             c_list = self.get_c(xi, b_list)
 
@@ -30,6 +34,9 @@ class BirgeVieta(OpenMethod):
 
             record = np.array([itr, b_list, c_list, xi, root, ea, rel])
             data.append(record)
+
+            if abs(root) > abs(old_root) and itr > 0:
+                divergence_count += 1
 
             if ea <= self.error:
                 return data

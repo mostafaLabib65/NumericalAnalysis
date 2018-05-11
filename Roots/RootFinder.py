@@ -12,7 +12,7 @@ class RootFinder:
 
     def get_roots(self):
         initial_points = []
-        ranges = [0.1, 0.3, 1, 3]
+        ranges = [3, 1, 0.3, 0.1, 0.03, 0.01, 0.003, 0.001]
         for k in ranges:
             x = np.arange(0, self.upper_bound - self.lower_bound, k)
             for i in range(len(x) - 1):
@@ -46,6 +46,6 @@ class RootFinder:
         x = np.arange(self.lower_bound, self.upper_bound+1, 0.1)
         y = []
         for i in x:
-         y.append(self.compute(i))
+            y.append(self.compute(i))
 
         return x, y

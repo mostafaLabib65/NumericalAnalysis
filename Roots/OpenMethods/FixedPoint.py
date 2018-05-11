@@ -14,7 +14,7 @@ class FixedPoint(OpenMethod):
         return self.fixed_point(xi)
 
     def fixed_point(self, xi):
-        old_root, itr, root, rel = 0, 0, 0, 0
+        old_root, itr, root, rel, divergence_count = 0, 0, 0, 0, 0
 
         derivative = self.compute_derivative(xi)
         if self.gx is None:
@@ -25,6 +25,10 @@ class FixedPoint(OpenMethod):
 
         data = []
         while itr < self.max_iterations:
+
+            if divergence_count > 15:
+                raise Exception("Method is diverging", data)
+
             root = float(self.compute(xi))
             ea = abs(root - old_root)
             rel = abs(ea / root) * 100
@@ -32,6 +36,10 @@ class FixedPoint(OpenMethod):
             record = np.array([itr, xi, root, self.compute(root), ea, rel])
             data.append(record)
             self.root = root
+
+            if abs(root) > abs(old_root) and itr > 0:
+                divergence_count += 1
+
             if ea <= self.error:
                 return data
             old_root = root
