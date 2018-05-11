@@ -44,7 +44,7 @@ class Bisection(object):
         iterations = lastIterationData[0]
         error = lastIterationData[-1]
         self.fig = BisectionPlot(xs, ys, xr, xl, xu, *args, **kwargs)
-        self.result = Result(solution=str(solution), status="I am status Groot", figure=self.fig, iterations=iterations,
+        self.result = Result(solution=str(solution), status="done", figure=self.fig, iterations=iterations,
                              message="We are groot", data=data, headers=bisector.get_headers(), error= error)
 
     def execute(self):
@@ -80,7 +80,7 @@ class FalsePosition(object):
         iterations = lastIterationData[0]
         error = lastIterationData[-1]
         self.fig = FalsePositionPlot(xs, ys, xr, xl, Fxl, xu, Fxu, *args, **kwargs)
-        self.result = Result(solution=str(solution), status="I am status Groot", figure=self.fig, iterations=iterations,
+        self.result = Result(solution=str(solution), status="done", figure=self.fig, iterations=iterations,
                              message="We are groot", data=data, headers=falsePositioner.get_headers(),error=error)
 
     def execute(self):
@@ -116,7 +116,7 @@ class BirgeVieta(object):
         iterations = lastIterationData[0]
         error = lastIterationData[-1]
         self.fig = NormalFunction(xs, ys)
-        self.result = Result(solution=str(solution), status="I am status Groot", figure=self.fig, iterations=iterations,
+        self.result = Result(solution=str(solution), status="done", figure=self.fig, iterations=iterations,
                              message="We are groot", data=data, headers=birgeVietaer.get_headers(),error=error)
 
     def execute(self):
@@ -243,7 +243,7 @@ class General(object):
         xs, ys = finder.get_plot()
         self.fig = NormalFunction(xs, ys)
 
-        self.result = Result(solution=solution, status="I am status Groot", figure=self.fig,
+        self.result = Result(solution=solution, status="done", figure=self.fig,
                              message="We are groot",error = errors)
 
     def execute(self):
