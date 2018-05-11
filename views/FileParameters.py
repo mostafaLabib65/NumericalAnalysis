@@ -6,14 +6,16 @@ class FileParameters:
         self.End = End
         self.tolerance = tolerance
         self.maxItr = maxItr
+        self.method = method
+        self.observer = observer
         self.parameters = {
-            "method": None if method is None else method.currentText(),
+            "method": None if method is None else method,
             "observer": observer,
-            "eq_str": None if equation is None else equation.text(),
-            "start_str": None if start is None else start.text(),
-            "end_str": None if End is None else End.text(),
-            "tolerance": None if tolerance is None else tolerance.text(),
-            "maxItr": None if maxItr is None else maxItr.text(),
+            "eq_str": None if equation is None else equation,
+            "start_str": None if start is None else start,
+            "end_str": None if End is None else End,
+            "tolerance": None if tolerance is None else tolerance,
+            "maxItr": None if maxItr is None else maxItr,
             "parent": widget,
             "app": app
         }
