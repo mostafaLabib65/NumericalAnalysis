@@ -46,10 +46,10 @@ class FalsePosition(Bracketer):
             if ea < self.error and itr > 1:
                 try:
                     self.check(root, ea)
+                    return data
                 except Exception:
                     root = (lower_bound + upper_bound) / 2
-                    continue
-                return data
+                    f_root = self.compute(root)
 
             old_root = root
             if f_root > 0:
