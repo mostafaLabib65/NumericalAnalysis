@@ -236,8 +236,9 @@ class General(object):
         errors = ""
         for i in roots:
             l = i[-1]
+            err = l[-1]
             l = l[5]
-            errors = errors + str(l[-1]) + " "
+            errors = errors + str(err) + "\n"
             solution = solution + str(l) + "\n"
         xs, ys = finder.get_plot()
         self.fig = NormalFunction(xs, ys)
