@@ -87,8 +87,7 @@ class MainWindow(QMainWindow, Observer):
         parameters = self.prepare_parameters()
 
         self.next.setDisabled(True)
-        global stepSolveFlag
-        stepSolveFlag = 0
+        self.stepSolveFlag = 0
 
         try:
             self.check_error()
