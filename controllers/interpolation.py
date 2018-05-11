@@ -17,12 +17,12 @@ class Lagrange(object):
         for i in range(0,len(y)):
             y[i] = float(y[i])
         values.append(y)
-        grange = LaGrange(values, float(numberOfPoints))
-        queries = []
-        for i in queryPoints.split():
-            queries.append(float[i])
+        grange = LaGrange(values, int(numberOfPoints))
+        points = queryPoints.split()
+        for i in range(0,len(points)):
+            points[i] = float(points[i])
         results = []
-        for i in queries:
+        for i in points:
             results.append(grange.do(i))
         self.result = Result(solution=results, status="I am status Groot",
                              message="We are groot")
@@ -44,13 +44,13 @@ class Newton(object):
         for i in range(0, len(y)):
             y[i] = float(y[i])
         values.append(y)
-        newKG = NewtonDivided(values, float(numberOfPoints))
-        queries = []
-        for i in queryPoints.split():
-            queries.append(float[i])
+        newKg = NewtonDivided(values, int(numberOfPoints))
+        points = queryPoints.split()
+        for i in range(0, len(points)):
+            points[i] = float(points[i])
         results = []
-        for i in queries:
-            results.append(newKG.do(i))
+        for i in points:
+            results.append(newKg.do(i))
         self.result = Result(solution=results, status="I am status Groot",
                              message="We are groot")
 

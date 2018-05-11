@@ -17,6 +17,9 @@
    <property name="enabled">
     <bool>true</bool>
    </property>
+   <property name="styleSheet">
+    <string notr="true">border-color: rgb(232, 17, 35);</string>
+   </property>
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="2" column="0">
      <widget class="QWidget" name="GaussWidget" native="true">
@@ -45,8 +48,14 @@
         </item>
         <item row="0" column="1">
          <widget class="QPushButton" name="gaussChooseFile">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
            <string>ChooseFile</string>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -61,6 +70,9 @@
          <widget class="QPushButton" name="gaussSolve">
           <property name="text">
            <string>Solve</string>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -99,6 +111,9 @@
          <widget class="QPushButton" name="chooseFile">
           <property name="text">
            <string>Choose File</string>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -254,8 +269,14 @@
           <property name="enabled">
            <bool>false</bool>
           </property>
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
            <string>Next</string>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -299,6 +320,9 @@
          <widget class="QPushButton" name="interChooseFile">
           <property name="text">
            <string>Choose file</string>
+          </property>
+          <property name="flat">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -450,6 +474,9 @@
      <height>554</height>
     </size>
    </property>
+   <property name="styleSheet">
+    <string notr="true">border-color: rgb(232, 17, 35);</string>
+   </property>
    <attribute name="dockWidgetArea">
     <number>1</number>
    </attribute>
@@ -459,6 +486,9 @@
       <width>400</width>
       <height>534</height>
      </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-color: rgb(232, 17, 35);</string>
     </property>
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
@@ -486,6 +516,9 @@
          <property name="text">
           <string>Animate</string>
          </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
         </widget>
        </item>
       </layout>
@@ -494,6 +527,9 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="dockWidget_2">
+   <property name="styleSheet">
+    <string notr="true">border-color: rgb(232, 17, 35);</string>
+   </property>
    <property name="floating">
     <bool>true</bool>
    </property>
