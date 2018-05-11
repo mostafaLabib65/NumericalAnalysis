@@ -159,8 +159,7 @@ class Newton(object):
             tolerance = "0.0001"
         if (maxItr == ""):
             maxItr = "50"
-        newton = newKg(diff.get_function(), diff.get_first_derivative(), diff.get_second_derivative(), float(tolerance),
-                       int(maxItr))
+        newton = newKg(diff.get_function(), diff.get_first_derivative(), diff.get_second_derivative(), error = float(tolerance) , max_iterations= int(maxItr) )
         data = newton.do(float(start_str))
         xs, ys = newton.get_plot()
         xr = []
