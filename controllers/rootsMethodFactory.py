@@ -23,6 +23,10 @@ class Bisection(object):
         self.observer = observer
         self.eq_str = eq_str
         diff = Differentiator(eq_str)
+        if(tolerance == ""):
+            tolerance = 0.0001
+        if(maxItr == ""):
+            maxItr = 50.0
         bis = bisector(diff.get_function(), float(tolerance), int(maxItr))
         start = float(start_str)
         end = float(end_str)
@@ -52,6 +56,10 @@ class FalsePosition(object):
         self.observer = observer
         self.eq_str = eq_str
         diff = Differentiator(eq_str)
+        if (tolerance == ""):
+            tolerance = "0.0001"
+        if (maxItr == ""):
+            maxItr = "50"
         falPosition = falsePositioner(diff.get_function(), float(tolerance), int(maxItr))
         data = falPosition.do(float(start_str), float(end_str))
         xs, ys = falPosition.get_plot()
@@ -83,6 +91,10 @@ class BirgeVieta(object):
         self.observer = observer
         self.eq_str = eq_str
         diff = Differentiator(eq_str)
+        if (tolerance == ""):
+            tolerance = "0.0001"
+        if (maxItr == ""):
+            maxItr = "50"
         birgeVieta = birgeVietaer(diff.get_function(), float(tolerance), int(maxItr))
         data = birgeVieta.do(float(start_str))
         xs, ys = birgeVieta.get_plot()
@@ -114,6 +126,10 @@ class FixedPoint(object):
         self.observer = observer
         self.eq_str = eq_str
         diff = Differentiator(eq_str)
+        if (tolerance == ""):
+            tolerance = "0.0001"
+        if (maxItr == ""):
+            maxItr = "50"
         fixPoint = fixedPointer(diff.get_function(), diff.get_first_derivative(), float(tolerance), int(maxItr))
         data = fixPoint.do(float(start_str))
         xs, ys = fixPoint.get_plot()
@@ -139,6 +155,10 @@ class Newton(object):
         self.observer = observer
         self.eq_str = eq_str
         diff = Differentiator(eq_str)
+        if (tolerance == ""):
+            tolerance = "0.0001"
+        if (maxItr == ""):
+            maxItr = "50"
         newton = newKg(diff.get_function(), diff.get_first_derivative(), diff.get_second_derivative(), float(tolerance),
                        int(maxItr))
         data = newton.do(float(start_str))
@@ -167,6 +187,10 @@ class Secant(object):
         self.observer = observer
         self.eq_str = eq_str
         diff = Differentiator(eq_str)
+        if (tolerance == ""):
+            tolerance = "0.0001"
+        if (maxItr == ""):
+            maxItr = "50"
         sec = secant(diff.get_function(), float(tolerance), int(maxItr))
         data = sec.do(float(start_str), float(end_str))
         xs, ys = sec.get_plot()
@@ -198,6 +222,8 @@ class General(object):
         self.observer = observer
         self.eq_str = eq_str
         diff = Differentiator(eq_str)
+        if (tolerance == ""):
+            tolerance = "0.0001"
         finder = RootFinder(diff.get_function(), float(start_str), float(end_str), int(numOFRoots), float(tolerance))
         roots = finder.get_roots()
         xs, ys = finder.get_plot()
