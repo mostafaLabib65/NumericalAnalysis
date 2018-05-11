@@ -22,6 +22,10 @@ class FalsePosition(Bracketer):
             f_lower = self.compute(lower_bound)
             f_upper = self.compute(upper_bound)
 
+            if f_lower > 0:
+                lower_bound, upper_bound = upper_bound, lower_bound
+                f_lower, f_upper = f_upper, f_lower
+
             if f_lower * f_upper > 0:
                 raise Exception("No valid roots in this interval")
             if f_upper - f_lower == 0:
