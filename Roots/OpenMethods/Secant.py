@@ -27,7 +27,7 @@ class Secant(OpenMethod):
 
             ea = abs(root - old_root)
 
-            record = np.array([itr+ 1, xi_1, f_xi_1, xi, f_xi, root, self.compute(root), ea, rel])
+            record = np.array([itr+ 1, xi_1, f_xi_1, xi, f_xi, root, self.compute(root), ea])
             data.append(record)
             self.root = root
 
