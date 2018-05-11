@@ -105,10 +105,8 @@ class MainWindow(QMainWindow, Observer):
     def step_btn_clicked(self):
         parameters = self.prepare_parameters()
         self.index = -1
-
-        self.next.setDisabled(True)
-        global stepSolveFlag
-        stepSolveFlag = 0
+        self.next.setDisabled(False)
+        self.stepSolveFlag = 1
 
         try:
             self.check_error()
