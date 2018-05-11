@@ -175,9 +175,9 @@ class MainWindow(QMainWindow, Observer):
             if index >= 0:
                 self.comboBox.setCurrentIndex(index)
             self.pointsEditor.setText(parameters.equation)
-            self.xInput.setText(parameters.start[1:len(parameters.start) -1])
-            self.yInput.setText(parameters.End[1:len(parameters.End) -1])
-            self.pointsText.setText(parameters.tolerance[1:len(parameters.tolerance) -1])
+            self.xInput.setText(parameters.start[1:len(parameters.start) - 1])
+            self.yInput.setText(parameters.End[1:len(parameters.End) - 1])
+            self.pointsText.setText(parameters.tolerance[1:len(parameters.tolerance) - 1])
         self.update()
 
     def update_ui(self, result):
@@ -186,16 +186,17 @@ class MainWindow(QMainWindow, Observer):
         self.statusBar().showMessage(result.status)
         if self.gaussGordanFlag == 0 and self.interpolationFlag == 0:
             if result.iterations != None:
-                self.solutionBrowser.setText(str(result.solution) + "\n" + str(result.iterations))
+                self.solutionBrowser.setText(
+                    "Root = " + str(result.solution) + "\nNumber of Iteration: " + str(result.iterations))
             else:
-                self.solutionBrowser.setText(str(result.solution))
+                self.solutionBrowser.setText("Root = " + str(result.solution))
             self.plotLayout.removeWidget(self.figure)
             self.figure = result.figure
             self.plotLayout.insertWidget(0, self.figure)
         elif self.gaussGordanFlag == 1:
-            self.gaussSolution.setText(str(result.solution))
+            self.gaussSolution.setText("Root =" + str(result.solution))
         elif self.interpolationFlag == 1:
-            self.outPut.setText(str(result.solution))
+            self.outPut.setText("Root =" + str(result.solution))
         if self.methodsCombo.currentText() != "Bierge Vieta":
             self.animatebtn.setEnabled(True)
         self.messageLabel.setText(result.message)
