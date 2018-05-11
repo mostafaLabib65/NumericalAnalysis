@@ -7,8 +7,12 @@ class Lagrange(object):
     def __init__(self, method, observer, numberOfPoints, xInput, yInput, queryPoints):
         super().__init__()
         self.observer = observer
-        x = xInput.split()
-        y = yInput.split()
+        if xInput[0] == '[':
+            x = xInput[1:len(xInput)-1].split(',')
+            y = yInput[1:len(yInput) -1].split(',')
+        else:
+            x = xInput.split(',')
+            y = yInput.split(',')
         values = []
         for i in range(0,len(x)):
             x[i] = float(x[i])
@@ -18,7 +22,10 @@ class Lagrange(object):
             y[i] = float(y[i])
         values.append(y)
         grange = LaGrange(values, int(numberOfPoints))
-        points = queryPoints.split()
+        if queryPoints[0] == '[':
+            points = queryPoints[1:len(queryPoints) - 1].split(',')
+        else:
+            points = queryPoints.split(',')
         for i in range(0,len(points)):
             points[i] = float(points[i])
         results = []
@@ -34,8 +41,12 @@ class Newton(object):
     def __init__(self, method, observer, numberOfPoints, xInput, yInput, queryPoints):
         super().__init__()
         self.observer = observer
-        x = xInput.split()
-        y = yInput.split()
+        if xInput[0] == '[':
+            x = xInput[1:len(xInput)-1].split(',')
+            y = yInput[1:len(yInput) -1].split(',')
+        else:
+            x = xInput.split(',')
+            y = yInput.split(',')
         values = []
         for i in range(0, len(x)):
             x[i] = float(x[i])
@@ -45,7 +56,10 @@ class Newton(object):
             y[i] = float(y[i])
         values.append(y)
         newKg = NewtonDivided(values, int(numberOfPoints))
-        points = queryPoints.split()
+        if queryPoints[0] == '[':
+            points = queryPoints[1:len(queryPoints) - 1].split(',')
+        else:
+            points = queryPoints.split(',')
         for i in range(0, len(points)):
             points[i] = float(points[i])
         results = []
