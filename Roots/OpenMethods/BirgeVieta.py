@@ -35,8 +35,10 @@ class BirgeVieta(OpenMethod):
             record = np.array([itr, b_list, c_list, xi, root, ea, rel])
             data.append(record)
 
-            if abs(root) > abs(old_root) and itr > 0:
+            if abs(self.compute(root)) > abs(self.compute(old_root)) and itr > 0:
                 divergence_count += 1
+            else:
+                divergence_count = 0
 
             if ea <= self.error:
                 return data

@@ -2,10 +2,10 @@ from Roots.OpenMethod import OpenMethod
 import numpy as np
 from math import e
 
+
 class Newton(OpenMethod):
-    def __init__(self, function, derivative=None, second_derivative=None, multiplicity=1, error=0.0001
-                 , max_iterations=50,gx=None):
-        super().__init__(function, derivative, second_derivative, multiplicity, error, max_iterations, gx)
+    def __init__(self, function, derivative=None, second_derivative=None, multiplicity=1, error=0.0001, max_iterations=50):
+        super().__init__(function, derivative, second_derivative, multiplicity, error, max_iterations)
 
     def do(self, xi):
         self.initial = xi
@@ -35,8 +35,10 @@ class Newton(OpenMethod):
             data.append(record)
             self.root = root
 
-            if abs(root) > abs(old_root) and itr > 0:
+            if abs(self.compute(root)) > abs(self.compute(old_root)) and itr > 0:
                 divergence_count += 1
+            else:
+                divergence_count = 0
 
             if ea <= self.error:
                 return data
