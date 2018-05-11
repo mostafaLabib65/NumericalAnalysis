@@ -13,7 +13,7 @@ class BirgeVieta(OpenMethod):
         return self.birge_vieta(xi)
 
     def birge_vieta(self, xi):
-        old_root, itr, root, rel, divergence_count, ea = 0, 0, 0, 0, 0, 0
+        old_root, itr, root, divergence_count, ea = 0, 0, 0, 0, 0
         data = []
         while itr < self.max_iterations:
 
@@ -27,12 +27,11 @@ class BirgeVieta(OpenMethod):
             derivative_xi = c_list[-1]
 
             if derivative_xi == 0:
-                raise Exception("Division by zero", root, itr, rel)
+                raise Exception("Division by zero", data)
             root = float(xi - (funct_xi / derivative_xi))
             ea = abs(root - old_root)
-            rel = abs(ea / root) * 100
 
-            record = np.array([itr + 1, b_list, c_list, xi, root, ea, rel])
+            record = np.array([itr + 1, b_list, c_list, xi, root, ea])
             data.append(record)
 
             if abs(self.compute(root)) > abs(self.compute(old_root)) and itr > 0:

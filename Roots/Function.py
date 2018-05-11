@@ -11,4 +11,4 @@ class Function:
 
     def evaluate(self, value):
         x = sp.symbols('x')
-        return sp.sympify(self.function).subs(x, value)
+        return float(sp.sympify(self.function).subs(x, value))

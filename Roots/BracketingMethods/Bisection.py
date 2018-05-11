@@ -13,7 +13,7 @@ class Bisection(Bracketer):
         return self.bisect(lower_bound, upper_bound)
 
     def bisect(self, lower_bound, upper_bound):
-        itr, old_root, root, rel, ea = 0, 0, 0, 0, 0
+        itr, old_root, root, ea = 0, 0, 0, 0
         f_lower = self.compute(lower_bound)
         f_upper = self.compute(upper_bound)
 
@@ -26,9 +26,8 @@ class Bisection(Bracketer):
             f_root = self.compute(root)
 
             ea = abs(root - old_root)
-            rel = abs(ea / root) * 100
 
-            record = np.array([itr + 1, lower_bound, f_lower, upper_bound, f_upper, root, f_root, ea, rel])
+            record = np.array([itr + 1, lower_bound, f_lower, upper_bound, f_upper, root, f_root, ea])
             data.append(record)
 
             if ea < self.error and itr > 1:
