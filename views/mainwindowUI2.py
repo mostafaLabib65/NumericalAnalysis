@@ -190,16 +190,16 @@ class MainWindow(QMainWindow, Observer):
         if self.gaussGordanFlag == 0 and self.interpolationFlag == 0:
             if result.iterations != None:
                 self.solutionBrowser.setText(
-                    "Root = " + str(result.solution) + "\nNumber of Iteration: " + str(result.iterations) + "\nTime  " + str(self.time)[4:])
+                    "Root = " + str(result.solution) + "\nNumber of Iteration: " + str(result.iterations) + "\nTime  " + str(self.time)[2:])
             else:
-                self.solutionBrowser.setText("Root = " + str(result.solution) + "\nTime" + str(self.time)[4:])
+                self.solutionBrowser.setText("Root = " + str(result.solution) + "\nTime" + str(self.time)[2:])
             self.plotLayout.removeWidget(self.figure)
             self.figure = result.figure
             self.plotLayout.insertWidget(0, self.figure)
         elif self.gaussGordanFlag == 1:
-            self.gaussSolution.setText("Root =" + str(result.solution) + "\nTime" + str(self.time)[4:])
+            self.gaussSolution.setText("Root =" + str(result.solution) + "\nTime" + str(self.time)[2:])
         elif self.interpolationFlag == 1:
-            self.outPut.setText("Root =" + str(result.solution) + "\nTime" + str(self.time)[4:])
+            self.outPut.setText("Root =" + str(result.solution) + "\nTime" + str(self.time)[2:])
         if self.methodsCombo.currentText() != "Bierge Vieta":
             self.animatebtn.setEnabled(True)
         self.messageLabel.setText(result.message)
