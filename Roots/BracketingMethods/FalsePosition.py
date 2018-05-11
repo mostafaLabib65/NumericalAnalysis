@@ -44,7 +44,11 @@ class FalsePosition(Bracketer):
             data.append(record)
 
             if ea < self.error and itr > 1:
-                self.check(root, ea)
+                try:
+                    self.check(root, ea)
+                except Exception:
+                    root = (lower_bound + upper_bound) / 2
+                    continue
                 return data
 
             old_root = root
