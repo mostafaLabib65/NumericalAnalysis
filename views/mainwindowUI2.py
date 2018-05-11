@@ -18,6 +18,7 @@ from views.InputValidation import InputValidation
 from views.Observer import Observer
 from controllers.interpolation import InterPolationFactory
 from views.FileParameters import FileParameters as fp
+import datetime
 
 ys = [1, .81, .43, .25, .04, 0, .04, .25, .43, .81, 1]
 xs = [-1, -.9, -.656, -.5, -.2, 0, .2, .5, .656, .9, 1]
@@ -35,7 +36,7 @@ class MainWindow(QMainWindow, Observer):
     interpolationFlag = 0
     result = []
     index = -1
-
+    time = 0
     def __init__(self, app):
         QMainWindow.__init__(self)
         self.app = app
@@ -100,7 +101,6 @@ class MainWindow(QMainWindow, Observer):
 
     def solve_btn_clicked(self):
         parameters = self.prepare_parameters()
-
         self.next.setDisabled(True)
         self.stepSolveFlag = 0
 
@@ -114,7 +114,10 @@ class MainWindow(QMainWindow, Observer):
             return
 
         try:
+            time1 = datetime.datetime.now()
             method = RootsMethodFactory.acquire_method(**parameters)
+            time2 =datetime.datetime.now()
+            self.time = time2 - time1
             method.execute()
         except Exception as ex:
             self.statusBar().setStyleSheet(error_style)
@@ -187,16 +190,16 @@ class MainWindow(QMainWindow, Observer):
         if self.gaussGordanFlag == 0 and self.interpolationFlag == 0:
             if result.iterations != None:
                 self.solutionBrowser.setText(
-                    "Root = " + str(result.solution) + "\nNumber of Iteration: " + str(result.iterations))
+                    "Root = " + str(result.solution) + "\nNumber of Iteration: " + str(result.iterations) + "\nTime  " + str(self.time)[4:])
             else:
-                self.solutionBrowser.setText("Root = " + str(result.solution))
+                self.solutionBrowser.setText("Root = " + str(result.solution) + "\nTime" + str(self.time)[4:])
             self.plotLayout.removeWidget(self.figure)
             self.figure = result.figure
             self.plotLayout.insertWidget(0, self.figure)
         elif self.gaussGordanFlag == 1:
-            self.gaussSolution.setText("Root =" + str(result.solution))
+            self.gaussSolution.setText("Root =" + str(result.solution) + "\nTime" + str(self.time[4:]))
         elif self.interpolationFlag == 1:
-            self.outPut.setText("Root =" + str(result.solution))
+            self.outPut.setText("Root =" + str(result.solution) + "\nTime" + str(self.time)[4:])
         if self.methodsCombo.currentText() != "Bierge Vieta":
             self.animatebtn.setEnabled(True)
         self.messageLabel.setText(result.message)
@@ -293,7 +296,10 @@ class MainWindow(QMainWindow, Observer):
 
     def gauss_Btn_Clicked(self):
         if self.chosenFileFlag == 0:
+            time1 = datetime.datetime.now()
             method = GaussGordan.acquire_method(self, self.gaussInput.toPlainText())
+            time2 = datetime.datetime.now()
+            self.time = time2 - time1
             method.execute()
         else:
             self.chosenFileFlag == 0
@@ -302,9 +308,12 @@ class MainWindow(QMainWindow, Observer):
 
     def interpolation_Btn_Clicked(self):
         if self.chosenFileFlag == 0:
+            time1 = datetime.datetime.now()
             method = InterPolationFactory.acquire_method(self.comboBox.currentText(), self,
                                                          self.pointsEditor.text(),
                                                          self.xInput.text(), self.yInput.text(), self.pointsText.text())
+            time2 = datetime.datetime.now()
+            self.time = time2 - time1
             method.execute()
         else:
             self.chosenFileFlag == 0
