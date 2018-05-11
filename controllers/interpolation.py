@@ -1,17 +1,61 @@
 from views.Result import Result
 from views.FileParameters import FileParameters
-
+from Interpolation.LaGrange import LaGrange
+from Interpolation.NewtonDivided import NewtonDivided
 
 class Lagrange(object):
     def __init__(self, method, observer, numberOfPoints, xInput, yInput, queryPoints):
-        ## do the logic here
-        return 0
+        super().__init__()
+        self.observer = observer
+        x = xInput.split()
+        y = yInput.split()
+        values = []
+        for i in range(0,len(x)):
+            x[i] = float(x[i])
+
+        values.append(x)
+        for i in range(0,len(y)):
+            y[i] = float(y[i])
+        values.append(y)
+        grange = LaGrange(values, float(numberOfPoints))
+        queries = []
+        for i in queryPoints.split():
+            queries.append(float[i])
+        results = []
+        for i in queries:
+            results.append(grange.do(i))
+        self.result = Result(solution=results, status="I am status Groot",
+                             message="We are groot")
+    def execute(self):
+        self.observer.notify(self.result)
 
 
 class Newton(object):
     def __init__(self, method, observer, numberOfPoints, xInput, yInput, queryPoints):
-        ## do the logic here
-        return 0
+        super().__init__()
+        self.observer = observer
+        x = xInput.split()
+        y = yInput.split()
+        values = []
+        for i in range(0, len(x)):
+            x[i] = float(x[i])
+
+        values.append(x)
+        for i in range(0, len(y)):
+            y[i] = float(y[i])
+        values.append(y)
+        newKG = NewtonDivided(values, float(numberOfPoints))
+        queries = []
+        for i in queryPoints.split():
+            queries.append(float[i])
+        results = []
+        for i in queries:
+            results.append(newKG.do(i))
+        self.result = Result(solution=results, status="I am status Groot",
+                             message="We are groot")
+
+    def execute(self):
+        self.observer.notify(self.result)
 
 
 class InterPolationFactory:
