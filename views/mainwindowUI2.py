@@ -294,7 +294,7 @@ class MainWindow(QMainWindow, Observer):
 
     def interpolation_Btn_Clicked(self):
         if self.chosenFileFlag == 0:
-            method = InterPolationFactory.acquire_method(self.methodsCombo.currentText(), self,
+            method = InterPolationFactory.acquire_method(self.comboBox.currentText(), self,
                                                          self.pointsEditor.text(),
                                                          self.xInput.text(), self.yInput.text(), self.pointsText.text())
             method.execute()
