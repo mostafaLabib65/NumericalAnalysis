@@ -201,7 +201,7 @@ class MainWindow(QMainWindow, Observer):
         elif self.gaussGordanFlag == 1:
             self.gaussSolution.setText("Solution =" + str(result.solution) + "\nTime" + str(self.time)[2:])
         elif self.interpolationFlag == 1:
-            self.outPut.setText("Root =" + str(result.solution) + "\nTime" + str(self.time)[2:])
+            self.outPut.setText("َQuery =" + str(result.solution) + "\nTime" + str(self.time)[2:])
         if self.methodsCombo.currentText() != "Bierge Vieta":
             self.animatebtn.setEnabled(True)
         self.messageLabel.setText(result.message)
