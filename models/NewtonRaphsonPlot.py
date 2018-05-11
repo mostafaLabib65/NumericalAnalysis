@@ -9,7 +9,7 @@ style.use('fivethirtyeight')
 
 
 class NewtonRaphsonPlot(PlotFigure):
-    def __init__(self,xs, ys, xr, x,fx, app=None, parent=None, width=5, height=4, dpi=100):
+    def __init__(self, xs, ys, xr, x, fx, app=None, parent=None, width=5, height=4, dpi=100):
         PlotFigure.__init__(self, parent, width, height, dpi)
         self.animateTimer = QtCore.QTimer(self)
         self.animateTimer.timeout.connect(self.update_figure)
@@ -23,7 +23,6 @@ class NewtonRaphsonPlot(PlotFigure):
         self.app = app
         self.axes.plot(self.xs, self.ys, label='function', color='r', lw=2)
         self.axes.legend()
-
 
     def animate(self):
         self.animateTimer.start(1000)
@@ -44,22 +43,23 @@ class NewtonRaphsonPlot(PlotFigure):
         try:
             i = next(self.generator)
         except StopIteration:
-            self.axes.plot([self.x[len(self.xr) - 1], self.xr[len(self.xr) - 1]], [self.fx[len(self.xr) - 1], 0], color='g', lw=1, linestyle='dashed',
-                     label='tangent')
+            self.axes.plot([self.x[len(self.xr) - 1], self.xr[len(self.xr) - 1]], [self.fx[len(self.xr) - 1], 0],
+                           color='g', lw=1, linestyle='dashed',
+                           label='tangent')
             self.axes.axvline(self.xr[len(self.xr) - 1], lw=1, color='b', linestyle='dashed', label='vertical')
             self.draw()
             self.axes.legend()
             return
         if i < len(self.xr) - 1:
-            self.animateLine(self.fx[i],self.x[i],self.xr[i],self.xs,self.ys)
+            self.animateLine(self.fx[i], self.x[i], self.xr[i], self.xs, self.ys)
         else:
             self.animateLine(self.fx[i], self.x[i], self.xr[i], self.xs, self.ys)
         self.animateTimer.blockSignals(False)
 
-    def animateLine(self,y1,x1,xr,xs,ys):
+    def animateLine(self, y1, x1, xr, xs, ys):
         self.axes.cla()
-        y = np.linspace(y1, 0, 10)
-        x = np.linspace(x1, xr, 10)
+        y = np.linspace(float(y1), float(0), 10)
+        x = np.linspace(float(x1), float(xr), 10)
         for n in range(len(x) + 1):
             self.axes.cla()
             self.axes.set_xlabel('x')

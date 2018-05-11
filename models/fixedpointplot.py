@@ -59,7 +59,7 @@ class FixedPointPlot(PlotFigure):
 
     def animate_horizontal(self, x1, x2, constY, hLinesX, hLinesY, xs, ys):
         self.axes.cla()
-        x = np.linspace(x1, x2, 4)
+        x = np.linspace(float(x1), float(x2), 4)
         y = [constY] * (len(x) + 1)
         self.axes.set(xlabel='x', ylabel='y', title='fixed point method')
         self.axes.axvline(x=0, lw=4, color='k', label='axes')
@@ -75,7 +75,7 @@ class FixedPointPlot(PlotFigure):
 
     def animate_vertical(self, y1, y2, constX, hLinesX, hLinesY, xs, ys):
         self.axes.cla()
-        y = np.linspace(y1, y2, 4)
+        y = np.linspace(float(y1), float(y2), 4)
         x = [constX] * (len(y) + 1)
         self.axes.set(xlabel='x', ylabel='y', title='fixed point method')
         self.axes.axvline(x=0, lw=4, color='k', label='axes')

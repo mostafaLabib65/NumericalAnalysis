@@ -11,22 +11,23 @@ from Roots.BracketingMethods.Bisection import Bisection as bisector
 from Roots.BracketingMethods.FalsePosition import FalsePosition as falsePositioner
 from Roots.OpenMethods.FixedPoint import FixedPoint as fixedPointer
 from Roots.OpenMethods.BirgeVieta import BirgeVieta as birgeVietaer
-from Roots.OpenMethods.Newton import Newton as newKg   ## ma7adesh yeshtem
+from Roots.OpenMethods.Newton import Newton as newKg  ## ma7adesh yeshtem ## 7ader
 from Roots.OpenMethods.Secant import Secant as secant
 from Roots.RootFinder import RootFinder
 
+
 class Bisection(object):
 
-    def __init__(self, observer, eq_str, start_str, end_str, tolerance, maxItr,*args, **kwargs):
+    def __init__(self, observer, eq_str, start_str, end_str, tolerance, maxItr, *args, **kwargs):
         super().__init__()
         self.observer = observer
         self.eq_str = eq_str
         diff = Differentiator(eq_str)
-        bis = bisector(diff.get_function(),float(tolerance),int(maxItr))
+        bis = bisector(diff.get_function(), float(tolerance), int(maxItr))
         start = float(start_str)
         end = float(end_str)
-        data = bis.do(start,end)
-        xs,ys = bis.get_plot()
+        data = bis.do(start, end)
+        xs, ys = bis.get_plot()
         xl = []
         xu = []
         xr = []
@@ -39,20 +40,21 @@ class Bisection(object):
         iterations = lastIterationData[0]
         self.fig = BisectionPlot(xs, ys, xr, xl, xu, *args, **kwargs)
         self.result = Result(solution=str(solution), status="I am status Groot", figure=self.fig, iterations=iterations,
-                             message="We are groot",data = data)
+                             message="We are groot", data=data)
 
     def execute(self):
         self.observer.notify(self.result)
 
+
 class FalsePosition(object):
-    def __init__(self, observer, eq_str, start_str, end_str, tolerance, maxItr,*args, **kwargs):
+    def __init__(self, observer, eq_str, start_str, end_str, tolerance, maxItr, *args, **kwargs):
         super().__init__()
         self.observer = observer
         self.eq_str = eq_str
         diff = Differentiator(eq_str)
-        falPosition = falsePositioner(diff.get_function(),float(tolerance),int(maxItr))
-        data = falPosition.do(float(start_str),float(end_str))
-        xs,ys = falPosition.get_plot()
+        falPosition = falsePositioner(diff.get_function(), float(tolerance), int(maxItr))
+        data = falPosition.do(float(start_str), float(end_str))
+        xs, ys = falPosition.get_plot()
         xl = []
         xu = []
         xr = []
@@ -67,22 +69,23 @@ class FalsePosition(object):
         lastIterationData = data.pop()
         solution = lastIterationData[5]
         iterations = lastIterationData[0]
-        self.fig = FalsePositionPlot(xs, ys, xr, xl,Fxl ,xu,Fxu, *args, **kwargs)
+        self.fig = FalsePositionPlot(xs, ys, xr, xl, Fxl, xu, Fxu, *args, **kwargs)
         self.result = Result(solution=str(solution), status="I am status Groot", figure=self.fig, iterations=iterations,
-                             message="We are groot",data = data)
+                             message="We are groot", data=data)
 
     def execute(self):
         self.observer.notify(self.result)
 
+
 class BirgeVieta(object):
-    def __init__(self, observer, eq_str, start_str, tolerance, maxItr,*args, **kwargs):
+    def __init__(self, observer, eq_str, start_str, tolerance, maxItr, *args, **kwargs):
         super().__init__()
         self.observer = observer
         self.eq_str = eq_str
         diff = Differentiator(eq_str)
-        birgeVieta = birgeVietaer(diff.get_function(),float(tolerance),int(maxItr))
+        birgeVieta = birgeVietaer(diff.get_function(), float(tolerance), int(maxItr))
         data = birgeVieta.do(float(start_str))
-        xs,ys = birgeVieta.get_plot()
+        xs, ys = birgeVieta.get_plot()
         '''xl = []
         xu = []
         xr = []
@@ -97,22 +100,23 @@ class BirgeVieta(object):
         lastIterationData = data.pop()
         solution = lastIterationData[4]
         iterations = lastIterationData[0]
-        self.fig = NormalFunction(xs,ys)
+        self.fig = NormalFunction(xs, ys)
         self.result = Result(solution=str(solution), status="I am status Groot", figure=self.fig, iterations=iterations,
-                             message="We are groot",data = data)
+                             message="We are groot", data=data)
 
     def execute(self):
         self.observer.notify(self.result)
 
+
 class FixedPoint(object):
-    def __init__(self, observer, eq_str, start_str,tolerance, maxItr,*args, **kwargs):
+    def __init__(self, observer, eq_str, start_str, tolerance, maxItr, *args, **kwargs):
         super().__init__()
         self.observer = observer
         self.eq_str = eq_str
         diff = Differentiator(eq_str)
-        fixPoint = fixedPointer(diff.get_function(),diff.get_first_derivative(),float(tolerance),int(maxItr))
+        fixPoint = fixedPointer(diff.get_function(), diff.get_first_derivative(), float(tolerance), int(maxItr))
         data = fixPoint.do(float(start_str))
-        xs,ys = fixPoint.get_plot()
+        xs, ys = fixPoint.get_plot()
         xi = []
         gx = []
         for i in data:
@@ -121,22 +125,24 @@ class FixedPoint(object):
         lastIterationData = data.pop()
         solution = lastIterationData[3]
         iterations = lastIterationData[0]
-        self.fig = FixedPointPlot(xs, ys, gx,xi, *args, **kwargs)
+        self.fig = FixedPointPlot(xs, ys, gx, xi, *args, **kwargs)
         self.result = Result(solution=str(solution), status="done", figure=self.fig, iterations=iterations,
-                             message="We are groot",data = data)
+                             message="We are groot", data=data)
 
     def execute(self):
         self.observer.notify(self.result)
 
+
 class Newton(object):
-    def __init__(self, observer, eq_str, start_str,tolerance, maxItr,*args, **kwargs):
+    def __init__(self, observer, eq_str, start_str, tolerance, maxItr, *args, **kwargs):
         super().__init__()
         self.observer = observer
         self.eq_str = eq_str
         diff = Differentiator(eq_str)
-        newton = newKg(diff.get_function(),diff.get_first_derivative(),diff.get_second_derivative(),float(tolerance),int(maxItr))
+        newton = newKg(diff.get_function(), diff.get_first_derivative(), diff.get_second_derivative(), float(tolerance),
+                       int(maxItr))
         data = newton.do(float(start_str))
-        xs,ys = newton.get_plot()
+        xs, ys = newton.get_plot()
         xr = []
         x = []
         fx = []
@@ -147,21 +153,22 @@ class Newton(object):
         lastIterationData = data.pop()
         solution = lastIterationData[4]
         iterations = lastIterationData[0]
-        self.fig = NewtonRaphsonPlot(xs, ys, xr,x,fx, *args, **kwargs)
+        self.fig = NewtonRaphsonPlot(xs, ys, xr, x, fx, *args, **kwargs)
         self.result = Result(solution=str(solution), status="done", figure=self.fig, iterations=iterations,
-                             message="We are groot", data = data)
+                             message="We are groot", data=data)
 
     def execute(self):
         self.observer.notify(self.result)
 
+
 class Secant(object):
-    def __init__(self, observer, eq_str, start_str, end_str,tolerance, maxItr,*args, **kwargs):
+    def __init__(self, observer, eq_str, start_str, end_str, tolerance, maxItr, *args, **kwargs):
         super().__init__()
         self.observer = observer
         self.eq_str = eq_str
         diff = Differentiator(eq_str)
-        sec = secant(diff.get_function(),float(tolerance),int(maxItr))
-        data = sec.do(float(start_str),float(end_str))
+        sec = secant(diff.get_function(), float(tolerance), int(maxItr))
+        data = sec.do(float(start_str), float(end_str))
         xs, ys = sec.get_plot()
         xr = []
         xl = []
@@ -177,104 +184,78 @@ class Secant(object):
         lastIterationData = data.pop()
         solution = lastIterationData[5]
         iterations = lastIterationData[0]
-        self.fig = SecantPlot(xs, ys, xr, xl, fxl,xbl,fxbl, *args, **kwargs)
+        self.fig = SecantPlot(xs, ys, xr, xl, fxl, xbl, fxbl, *args, **kwargs)
         self.result = Result(solution=str(solution), status="done", figure=self.fig, iterations=iterations,
-                             message="We are groot",data = data)
-
+                             message="We are groot", data=data)
 
     def execute(self):
         self.observer.notify(self.result)
 
+
 class General(object):
-    def __init__(self, observer, eq_str, start_str, end_str,tolerance,numOFRoots,*args, **kwargs):
+    def __init__(self, observer, eq_str, start_str, end_str, tolerance, numOFRoots, *args, **kwargs):
         super().__init__()
         self.observer = observer
         self.eq_str = eq_str
         diff = Differentiator(eq_str)
-        finder = RootFinder(diff.get_function(),float(start_str),float(end_str),int(numOFRoots),float(tolerance))
+        finder = RootFinder(diff.get_function(), float(start_str), float(end_str), int(numOFRoots), float(tolerance))
         roots = finder.get_roots()
         xs, ys = finder.get_plot()
         self.fig = NormalFunction(xs, ys)
         self.result = Result(status="I am status Groot", figure=self.fig,
-                         message="We are groot", data=roots)
+                             message="We are groot", data=roots)
+
     def execute(self):
         self.observer.notify(self.result)
 
 
 class RootsMethodFactory:
     @staticmethod
-    def acquire_method(method, observer, eq_str, start_str, end_str, tolerance, maxItr, *args, **kwargs):
-        if (method == "Bisection"):
+    def acquire_method(method=None, observer=None, eq_str=None, start_str=None, end_str=None, tolerance=None,
+                       maxItr=None, *args, **kwargs):
+        if method == "Bisection":
             return Bisection(observer, eq_str, start_str, end_str, tolerance, maxItr, *args, **kwargs)
-        elif(method == "False-Position"):
+        elif method == "False-Position":
             return FalsePosition(observer, eq_str, start_str, end_str, tolerance, maxItr, *args, **kwargs)
-        elif(method == "Fixed Point"):
+        elif method == "Fixed Point":
             return FixedPoint(observer, eq_str, start_str, tolerance, maxItr, *args, **kwargs)
-        elif(method == "Bierge Vieta"):
+        elif method == "Bierge Vieta":
             return BirgeVieta(observer, eq_str, start_str, tolerance, maxItr, *args, **kwargs)
-        elif (method == "Newton"):
+        elif method == "Newton":
             return Newton(observer, eq_str, start_str, tolerance, maxItr, *args, **kwargs)
-        elif (method == "Secant"):
+        elif method == "Secant":
             return Secant(observer, eq_str, start_str, end_str, tolerance, maxItr, *args, **kwargs)
-        elif (method == "General algorithm"):
-            return General(observer, eq_str, start_str, end_str, tolerance, maxItr,*args, **kwargs)
+        elif method == "General algorithm":
+            return General(observer, eq_str, start_str, end_str, tolerance, maxItr, *args, **kwargs)
+
     @staticmethod
-    def readFromFile(fileName,observer):
+    def readFromFile(fileName, observer, **kwargs):
         with open(fileName) as f:
             lines = f.readlines()
-        for i in range(0,len(lines)):
+        for i in range(0, len(lines)):
             lines[i] = lines[i].strip("\n")
         interval = lines[3].split()
-        if(len(interval) != 2):
+        if (len(interval) != 2):
             end = 0
         else:
             end = interval[1]
-        parameters = FileParameters(method = RootsMethodFactory.getMethod(lines[1]), equation = lines[2], start = interval[0], End = end, tolerance=lines[4], maxItr= lines[5])
+        parameters = FileParameters(method=RootsMethodFactory.getMethod(lines[1]), equation=lines[2], start=interval[0],
+                                    End=end, tolerance=lines[4], maxItr=lines[5], **kwargs)
 
         observer.notifyFileParameters(parameters)
 
     def getMethod(number):
-        if(number == "1"):
+        if (number == "1"):
             return "Bisection"
-        elif(number == "2"):
+        elif (number == "2"):
             return "False-Position"
-        elif(number == "3"):
+        elif (number == "3"):
             return "Fixed Point"
-        elif(number == "4"):
+        elif (number == "4"):
             return "Newton"
-        elif(number == "5"):
+        elif (number == "5"):
             return "Secant"
-        elif(number == "6"):
+        elif (number == "6"):
             return "Bierge Vieta"
         else:
             return "General algorithm"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
