@@ -40,7 +40,7 @@ class FalsePosition(Bracketer):
 
             ea = abs(root - old_root)
 
-            record = np.array([itr, lower_bound, f_lower, upper_bound, f_upper, root, f_root, ea])
+            record = np.array([itr + 1, lower_bound, f_lower, upper_bound, f_upper, root, f_root, ea])
             data.append(record)
 
             if ea < self.error and itr > 1:
