@@ -7,9 +7,8 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QMainWindow, QDockWidget, QVBoxLayout, QPushButton, QLabel
+from PyQt5.QtWidgets import QMainWindow, QDockWidget, QVBoxLayout, QPushButton, QLabel, QAction
 from qtpy import QtGui, QtCore
-
 from controllers.rootsMethodFactory import RootsMethodFactory
 from controllers.gaussGordanFactory import GaussGordan
 from models.fixedpointplot import FixedPointPlot
@@ -61,7 +60,18 @@ class MainWindow(QMainWindow, Observer):
         self.interSolve.clicked.connect(self.interpolation_Btn_Clicked)
         self.interChooseFile.clicked.connect(self.readFromFile)
         self.statusBar().show()
+        self.populate_menu_bar()
         self.show()
+
+    def populate_menu_bar(self):
+        openFileAction = QAction("Open a file", self)
+        openFileAction.setShortcut("Ctrl+O")
+        openFileAction.setStatusTip('open a file to be loaded')
+        openFileAction.triggered.connect(self.readFromFile)
+
+        fileMenu = self.menuBar().addMenu("File")
+        fileMenu.addAction(openFileAction)
+        self.menuBar().show()
 
     def animate_btn_clicked(self):
         self.figure.animate()
@@ -311,6 +321,22 @@ if __name__ == "__main__":
     import sys
 
     app = QtWidgets.QApplication(sys.argv)
+    app.setStyle('Fusion')
+    palette = QtGui.QPalette()
+    palette.setColor(QtGui.QPalette.Window, QtGui.QColor(53, 53, 53))
+    palette.setColor(QtGui.QPalette.WindowText, QtCore.Qt.white)
+    palette.setColor(QtGui.QPalette.Base, QtGui.QColor(15, 15, 15))
+    palette.setColor(QtGui.QPalette.AlternateBase, QtGui.QColor(53, 53, 53))
+    palette.setColor(QtGui.QPalette.ToolTipBase, QtCore.Qt.white)
+    palette.setColor(QtGui.QPalette.ToolTipText, QtCore.Qt.white)
+    palette.setColor(QtGui.QPalette.Text, QtCore.Qt.white)
+    palette.setColor(QtGui.QPalette.Button, QtGui.QColor(53, 53, 53))
+    palette.setColor(QtGui.QPalette.ButtonText, QtCore.Qt.white)
+    palette.setColor(QtGui.QPalette.BrightText, QtCore.Qt.red)
+
+    palette.setColor(QtGui.QPalette.Highlight, QtGui.QColor(142, 45, 197).lighter())
+    palette.setColor(QtGui.QPalette.HighlightedText, QtCore.Qt.black)
+    app.setPalette(palette)
     window = MainWindow(app)
     window.setupUi()
     sys.exit(app.exec_())

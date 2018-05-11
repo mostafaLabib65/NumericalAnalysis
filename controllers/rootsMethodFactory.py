@@ -39,7 +39,7 @@ class Bisection(object):
             xl.append(i[1])
             xu.append(i[3])
             xr.append(i[5])
-        lastIterationData = data.pop()
+        lastIterationData = data[len(data) -1 ]
         solution = lastIterationData[5]
         iterations = lastIterationData[0]
         self.fig = BisectionPlot(xs, ys, xr, xl, xu, *args, **kwargs)
@@ -74,7 +74,7 @@ class FalsePosition(object):
             xr.append(i[5])
             Fxl.append((i[2]))
             Fxu.append(i[4])
-        lastIterationData = data.pop()
+        lastIterationData = data[len(data)-1]
         solution = lastIterationData[5]
         iterations = lastIterationData[0]
         self.fig = FalsePositionPlot(xs, ys, xr, xl, Fxl, xu, Fxu, *args, **kwargs)
@@ -109,7 +109,7 @@ class BirgeVieta(object):
             xr.append(i[5])
             Fxl.append((i[2]))
             Fxu.append(i[4])'''
-        lastIterationData = data.pop()
+        lastIterationData = data[len(data) -1]
         solution = lastIterationData[4]
         iterations = lastIterationData[0]
         self.fig = NormalFunction(xs, ys)
@@ -138,7 +138,7 @@ class FixedPoint(object):
         for i in data:
             xi.append(i[1])
             gx.append(i[2])
-        lastIterationData = data.pop()
+        lastIterationData = data[len(data) -1]
         solution = lastIterationData[3]
         iterations = lastIterationData[0]
         self.fig = FixedPointPlot(xs, ys, gx, xi, *args, **kwargs)
@@ -170,7 +170,7 @@ class Newton(object):
             xr.append(float(i[4]))
             x.append(float(i[1]))
             fx.append(float(i[2]))
-        lastIterationData = data.pop()
+        lastIterationData = data[len(data) -1]
         solution = lastIterationData[4]
         iterations = lastIterationData[0]
         self.fig = NewtonRaphsonPlot(xs, ys, xr, x, fx, *args, **kwargs)
@@ -205,7 +205,7 @@ class Secant(object):
             fxl.append(float(i[2]))
             xbl.append(float(i[3]))
             fxbl.append(float(i[4]))
-        lastIterationData = data.pop()
+        lastIterationData = data[len(data) -1]
         solution = lastIterationData[5]
         iterations = lastIterationData[0]
         self.fig = SecantPlot(xs, ys, xr, xl, fxl, xbl, fxbl, *args, **kwargs)
