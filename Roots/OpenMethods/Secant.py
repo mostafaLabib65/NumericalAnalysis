@@ -11,9 +11,11 @@ class Secant(OpenMethod):
         return self.secant(xi, xi_1)
 
     def secant(self, xi, xi_1):
-        old_root, itr, root, rel = 0, 0, 0, 0
+        old_root, itr, root, rel, divergence_count = 0, 0, 0, 0, 0
         data = []
         while itr < self.max_iterations:
+            if divergence_count > 15:
+                raise Exception("Method is diverging", data)
 
             f_xi = self.compute(xi)
             f_xi_1 = self.compute(xi_1)
@@ -29,6 +31,11 @@ class Secant(OpenMethod):
             record = np.array([itr, xi_1, f_xi_1, xi, f_xi, root, self.compute(root), ea, rel])
             data.append(record)
             self.root = root
+
+            if abs(root) > abs(old_root) and itr > 0:
+                divergence_count += 1
+
+
             if ea <= self.error:
                 return data
             xi_1 = xi
