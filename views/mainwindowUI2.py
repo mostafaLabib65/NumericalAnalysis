@@ -158,7 +158,10 @@ class MainWindow(QMainWindow, Observer):
     def update_ui(self, result):
         self.setStatusTip(result.status)
         if self.gaussGordanFlag == 0 and self.interpolationFlag == 0:
-            self.solutionBrowser.setText(str(result.solution) + "\n" + str(result.iterations))
+            if result.iterations != None:
+                self.solutionBrowser.setText(str(result.solution) + "\n" + str(result.iterations))
+            else:
+                self.solutionBrowser.setText(str(result.solution))
             self.plotLayout.removeWidget(self.figure)
             self.figure = result.figure
             self.plotLayout.insertWidget(0, self.figure)

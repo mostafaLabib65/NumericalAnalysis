@@ -10,6 +10,8 @@ class InputValidation:
             raise InputException("Both Intervals ends are needed")
         elif InputValidation.partial_interval_needed(method, end):
             raise InputException("A starting point is needed")
+        elif InputValidation.num_of_roots_needed(method,end):
+            raise InputException("Number of roots is needed")
 
 
     @staticmethod
@@ -25,3 +27,7 @@ class InputValidation:
     def partial_interval_needed(method, end):
         return (method == "Newton" or method == "Fixed Point" or method == "Bierge Vieta") and (
                 end == "")
+
+    @staticmethod
+    def num_of_roots_needed(method, end):
+        return (method == "General algorithm" and(end == ""))

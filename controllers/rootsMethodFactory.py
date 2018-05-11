@@ -226,10 +226,16 @@ class General(object):
             tolerance = "0.0001"
         finder = RootFinder(diff.get_function(), float(start_str), float(end_str), int(numOFRoots), float(tolerance))
         roots = finder.get_roots()
+        solution = ""
+        for i in roots:
+            s = len(i)
+            l = i[len(i) -1]
+            l = l[5]
+            solution = solution + str(l) + "\n"
         xs, ys = finder.get_plot()
         self.fig = NormalFunction(xs, ys)
-        self.result = Result(status="I am status Groot", figure=self.fig,
-                             message="We are groot", data=roots)
+        self.result = Result(solution = solution,status="I am status Groot", figure=self.fig,
+                             message="We are groot")
 
     def execute(self):
         self.observer.notify(self.result)
