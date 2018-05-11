@@ -2,7 +2,8 @@ from views.Result import Result
 from views.FileParameters import FileParameters
 from Interpolation.LaGrange import LaGrange
 from Interpolation.NewtonDivided import NewtonDivided
-
+import numpy as np
+from models.NormalFunction import NormalFunction
 class Lagrange(object):
     def __init__(self, method, observer, numberOfPoints, xInput, yInput, queryPoints):
         super().__init__()
@@ -29,9 +30,15 @@ class Lagrange(object):
         for i in range(0,len(points)):
             points[i] = float(points[i])
         results = []
+        xs = np.arange(x[0],x[-1],0.1)
+        ys = []
+        for i in xs:
+            ys.append(grange.do(i))
+
         for i in points:
             results.append(grange.do(i))
-        self.result = Result(solution=results, status="I am status Groot",
+        self.fig = NormalFunction(xs, ys)
+        self.result = Result(solution=results, status="I am status Groot",figure = self.fig,
                              message="We are groot")
     def execute(self):
         self.observer.notify(self.result)
@@ -63,9 +70,15 @@ class Newton(object):
         for i in range(0, len(points)):
             points[i] = float(points[i])
         results = []
+        xs = np.arange(x[0], x[-1], 0.1)
+        ys = []
+        for i in xs:
+            ys.append(newKg.do(i))
+
         for i in points:
             results.append(newKg.do(i))
-        self.result = Result(solution=results, status="I am status Groot",
+        self.fig = NormalFunction(xs, ys)
+        self.result = Result(solution=results, status="I am status Groot",figure = self.fig,
                              message="We are groot")
 
     def execute(self):

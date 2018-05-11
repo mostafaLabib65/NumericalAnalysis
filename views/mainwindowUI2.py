@@ -202,6 +202,9 @@ class MainWindow(QMainWindow, Observer):
             self.gaussSolution.setText("Solution =" + str(result.solution) + "\nTime" + str(self.time)[2:])
         elif self.interpolationFlag == 1:
             self.outPut.setText("َQuery =" + str(result.solution) + "\nTime" + str(self.time)[2:])
+            self.plotLayout.removeWidget(self.figure)
+            self.figure = result.figure
+            self.plotLayout.insertWidget(0, self.figure)
         if self.methodsCombo.currentText() != "Bierge Vieta":
             self.animatebtn.setEnabled(True)
         self.messageLabel.setText(result.message)
@@ -305,7 +308,7 @@ class MainWindow(QMainWindow, Observer):
         elif (self.modes.currentText() == "Interpolation"):
             self.gaussGordanFlag = 0
             self.interpolationFlag = 1
-            self.dockWidgetContents.setHidden(True)
+            self.dockWidgetContents.setVisible(True)
             self.GaussWidget.setHidden(True)
             self.RootsWidget.setHidden(True)
             self.interpolationWidget.setVisible(True)
