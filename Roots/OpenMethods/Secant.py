@@ -10,6 +10,11 @@ class Secant(OpenMethod):
         self.initial = max(abs(xi), abs(xi_1))
         return self.secant(xi, xi_1)
 
+    @staticmethod
+    def get_headers():
+        return ["Iterations", "X(i-1)", "F of X(i-1)", "X(i)", "F of X(i)", "Root", "F of Root",
+                "Absolute Error"]
+
     def secant(self, xi, xi_1):
         old_root, itr, root, divergence_count, ea = 0, 0, 0, 0, 0
         data = []

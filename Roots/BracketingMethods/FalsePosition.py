@@ -12,6 +12,11 @@ class FalsePosition(Bracketer):
         self.upper = upper_bound
         return self.false_pos(lower_bound, upper_bound)
 
+    @staticmethod
+    def get_headers():
+        return ["Iterations", "Lower Bound", "F of Lower", "Upper Bound", "F of Upper", "Root", "F of Root",
+                "Absolute Error"]
+
     def false_pos(self, lower_bound, upper_bound):
         itr, old_root, root, ea = 0, 0, 0, 0
         lower_bound_stuck, upper_bound_stuck = 0, 0
@@ -43,7 +48,7 @@ class FalsePosition(Bracketer):
             record = np.array([itr + 1, lower_bound, f_lower, upper_bound, f_upper, root, f_root, ea])
             data.append(record)
 
-            if ea < self.error and itr > 1:
+            if ea < self.error and itr > 0:
                 try:
                     self.check(root, ea)
                     return data

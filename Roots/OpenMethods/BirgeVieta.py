@@ -12,6 +12,10 @@ class BirgeVieta(OpenMethod):
     def do(self, xi):
         return self.birge_vieta(xi)
 
+    @staticmethod
+    def get_headers():
+        return ["Iterations", "B", "C", "X(i)", "Root", "Absolute Error"]
+
     def birge_vieta(self, xi):
         old_root, itr, root, divergence_count, ea = 0, 0, 0, 0, 0
         data = []
