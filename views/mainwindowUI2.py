@@ -211,12 +211,18 @@ class MainWindow(QMainWindow, Observer):
             self.messageLabel.setText(self.result.message)
             self.index += 1
         elif self.index == 0:
-            self.solutionBrowser.setText(str(self.result.data[0]))
+            self.solutionBrowser.setText(self.formatData(self.result.data[0]))
             self.index += 1
         else:
             if self.index != len(self.result.data):
-                self.solutionBrowser.append("\n" + str(self.result.data[self.index]))
+                self.solutionBrowser.append("\n" + self.formatData(self.result.data[self.index]))
                 self.index += 1
+
+    def formatData(self, row):
+        row_str = ""
+        for item in row:
+            row_str += "{:8.4f}".format(float(item))
+        return row_str
 
     def update_step_plot(self, result):
         self.plotLayout.removeWidget(self.figure)
