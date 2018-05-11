@@ -192,9 +192,9 @@ class MainWindow(QMainWindow, Observer):
             if result.iterations != None:
                 self.solutionBrowser.setText(
                     "Root = " + str(result.solution) + "\nNumber of Iteration: " + str(
-                        result.iterations) + "\nTime  " + str(self.time)[2:])
+                        result.iterations) + "\nTime  " + str(self.time)[2:] + "\n Error " + str(result.error))
             else:
-                self.solutionBrowser.setText("Root = " + str(result.solution) + "\nTime" + str(self.time)[2:])
+                self.solutionBrowser.setText("Root = " + str(result.solution) + "\nTime" + str(self.time)[2:] + "\n" + str(result.error) + "\n Error " + str(result.error))
             self.plotLayout.removeWidget(self.figure)
             self.figure = result.figure
             self.plotLayout.insertWidget(0, self.figure)
