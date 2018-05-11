@@ -32,6 +32,7 @@ class Bisection(Bracketer):
             data.append(record)
 
             if ea < self.error and itr > 1:
+                self.check(root, data)
                 return data
 
             cond = f_lower * f_root
@@ -45,4 +46,5 @@ class Bisection(Bracketer):
                 return data
 
             itr = itr + 1
+        self.check(root, data)
         return data

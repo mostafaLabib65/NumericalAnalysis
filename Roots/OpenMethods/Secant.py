@@ -38,9 +38,11 @@ class Secant(OpenMethod):
                 divergence_count = 0
 
             if ea <= self.error:
+                self.check(root, data)
                 return data
             xi_1 = xi
             old_root = root
             xi = root
             itr = itr + 1
+        self.check(root, data)
         return data

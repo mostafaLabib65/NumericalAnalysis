@@ -27,7 +27,7 @@ class FalsePosition(Bracketer):
             if f_upper - f_lower == 0:
                 raise Exception("Division by zero", root, itr, rel)
 
-            if abs(lower_bound_stuck - upper_bound_stuck) == 20:
+            if abs(upper_bound_stuck) == 20 or abs(lower_bound_stuck) == 20:
                 root = (lower_bound + upper_bound) / 2
                 lower_bound_stuck, upper_bound_stuck = 0, 0
             else:
@@ -41,19 +41,21 @@ class FalsePosition(Bracketer):
             data.append(record)
 
             if ea < self.error and itr > 1:
+                self.check(root, data)
                 return data
-
-            cond = f_root * f_lower
 
             old_root = root
             if f_root > 0:
                 upper_bound = root
                 upper_bound_stuck += 1
+                lower_bound_stuck = 0
             elif f_root < 0:
                 lower_bound = root
                 lower_bound_stuck += 1
+                upper_bound_stuck = 0
             else:
                 return data
 
             itr = itr + 1
+        self.check(root, data)
         return data

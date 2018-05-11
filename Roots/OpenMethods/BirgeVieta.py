@@ -41,10 +41,12 @@ class BirgeVieta(OpenMethod):
                 divergence_count = 0
 
             if ea <= self.error:
+                self.check(root, data)
                 return data
             old_root = root
             xi = root
             itr = itr + 1
+        self.check(root, data)
         return data
 
     def get_b(self, xi):

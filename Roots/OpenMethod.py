@@ -44,3 +44,7 @@ class OpenMethod:
     @abc.abstractclassmethod
     def do(self, *args):
         return
+
+    def check(self, root, data):
+        if not(abs(self.compute(root)) < self.error):
+            raise Exception("Could not find root", data)
