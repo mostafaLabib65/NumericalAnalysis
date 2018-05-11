@@ -197,7 +197,7 @@ class MainWindow(QMainWindow, Observer):
             self.figure = result.figure
             self.plotLayout.insertWidget(0, self.figure)
         elif self.gaussGordanFlag == 1:
-            self.gaussSolution.setText("Root =" + str(result.solution) + "\nTime" + str(self.time[4:]))
+            self.gaussSolution.setText("Root =" + str(result.solution) + "\nTime" + str(self.time)[4:])
         elif self.interpolationFlag == 1:
             self.outPut.setText("Root =" + str(result.solution) + "\nTime" + str(self.time)[4:])
         if self.methodsCombo.currentText() != "Bierge Vieta":
