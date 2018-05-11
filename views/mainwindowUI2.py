@@ -7,6 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtWidgets, uic
+from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QMainWindow, QDockWidget, QVBoxLayout, QPushButton, QLabel, QAction
 from qtpy import QtGui, QtCore
 from controllers.rootsMethodFactory import RootsMethodFactory
@@ -22,9 +23,9 @@ ys = [1, .81, .43, .25, .04, 0, .04, .25, .43, .81, 1]
 xs = [-1, -.9, -.656, -.5, -.2, 0, .2, .5, .656, .9, 1]
 gx = [0.81, .656, .43, .1853, 0.03433, 0]
 x = [.9, 0.81, .656, .43, .1853, 0.03433]
-error_style = "QStatusBar{padding-left:8px;background:rgba(255,0,0,255);color:white;font-weight:bold;}"
-info_style = "QStatusBar{padding-left:8px;background:rgba(192,192,192,0.3);color:white;font-weight:bold;}"
-sucess = "QStatusBar{padding-left:8px;background:rgba(0,255,0,255);color:white;font-weight:bold;}"
+error_style = "QStatusBar{padding-left:8px;background:rgba(255,0,0,255);color:white;font-weight:bold;border: 5px rgb(57, 57, 58);}"
+info_style = "QStatusBar{padding-left:8px;background:rgba(192,192,192,0.3);color:white;font-weight:bold;border: 5px rgb(57, 57, 58);}"
+sucess = "QStatusBar{padding-left:8px;background:rgba(0,255,0,255);color:white;font-weight:bold;border: 5px rgb(57, 57, 58);}"
 
 
 class MainWindow(QMainWindow, Observer):
@@ -323,19 +324,14 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     app.setStyle('Fusion')
     palette = QtGui.QPalette()
-    palette.setColor(QtGui.QPalette.Window, QtGui.QColor(53, 53, 53))
-    palette.setColor(QtGui.QPalette.WindowText, QtCore.Qt.white)
-    palette.setColor(QtGui.QPalette.Base, QtGui.QColor(15, 15, 15))
-    palette.setColor(QtGui.QPalette.AlternateBase, QtGui.QColor(53, 53, 53))
-    palette.setColor(QtGui.QPalette.ToolTipBase, QtCore.Qt.white)
-    palette.setColor(QtGui.QPalette.ToolTipText, QtCore.Qt.white)
-    palette.setColor(QtGui.QPalette.Text, QtCore.Qt.white)
-    palette.setColor(QtGui.QPalette.Button, QtGui.QColor(53, 53, 53))
-    palette.setColor(QtGui.QPalette.ButtonText, QtCore.Qt.white)
-    palette.setColor(QtGui.QPalette.BrightText, QtCore.Qt.red)
+    palette.setColor(QtGui.QPalette.Window, QColor(0, 120, 215))
+    palette.setColor(QtGui.QPalette.WindowText, QtGui.QColor(255, 255, 255))
+    palette.setColor(QtGui.QPalette.Text, QtCore.Qt.black)
 
-    palette.setColor(QtGui.QPalette.Highlight, QtGui.QColor(142, 45, 197).lighter())
-    palette.setColor(QtGui.QPalette.HighlightedText, QtCore.Qt.black)
+    # palette.setColor(QtGui.QPalette.ButtonText, QColor(111, 111, 111))
+    # palette.setColor(QtGui.QPalette.BrightText, QtCore.Qt.red)
+    palette.setColor(QtGui.QPalette.Button, QColor(255, 185, 0))
+    # palette.setColor(QtGui.QPalette.HighlightedText, QtCore.Qt.black)
     app.setPalette(palette)
     window = MainWindow(app)
     window.setupUi()
