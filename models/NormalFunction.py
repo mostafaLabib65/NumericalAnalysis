@@ -17,6 +17,6 @@ class NormalFunction(PlotFigure):
         self.parent = parent
         self.app = app
         self.axes.plot(self.xs, self.ys, label='function', color='r', lw=2)
-        self.axes.axvline(x=0, lw=2, color='b')
-        self.axes.axhline(y=0, lw=2, color='b')
+        self.axes.axvline(x=0, lw=2, color='k')
+        self.axes.axhline(y=0, lw=2, color='k')
         self.axes.legend()
