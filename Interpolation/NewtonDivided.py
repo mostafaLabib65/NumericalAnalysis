@@ -4,8 +4,8 @@ from numpy import *
 
 class NewtonDivided(Interpolator):
 
-    def __int__(self, values):
-        super().__init__(values)
+    def __int__(self, values, order):
+        super().__init__(values, order)
 
     def do(self, x):
         return self.interpolate(x)

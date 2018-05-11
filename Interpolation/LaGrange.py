@@ -4,8 +4,8 @@ from numpy import *
 
 class LaGrange(Interpolator):
 
-    def __init__(self, values):
-        super().__init__(values=values)
+    def __init__(self, values, order):
+        super().__init__(values, order)
 
     def do(self, x):
         return self.interpolate(x)
