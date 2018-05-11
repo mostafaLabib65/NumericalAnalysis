@@ -9,6 +9,9 @@ class GaussJordan:
     def solve(self):
         rows = shape(self.values)[0]
         cols = shape(self.values)[1]
+        if not(rows+1 == cols):
+            raise Exception("Can't solve")
+        
         for k in range(rows):
             shift = k
             for i in range(rows):
