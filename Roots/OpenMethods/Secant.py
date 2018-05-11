@@ -7,7 +7,7 @@ class Secant(OpenMethod):
         super().__init__(function,error, max_iterations)
 
     def do(self, xi, xi_1):
-        self.initial = max(abs(xi),abs(xi_1))
+        self.initial = max(abs(xi), abs(xi_1))
         return self.secant(xi, xi_1)
 
     def secant(self, xi, xi_1):
@@ -32,9 +32,10 @@ class Secant(OpenMethod):
             data.append(record)
             self.root = root
 
-            if abs(root) > abs(old_root) and itr > 0:
+            if abs(self.compute(root)) > abs(self.compute(old_root)) and itr > 0:
                 divergence_count += 1
-
+            else:
+                divergence_count = 0
 
             if ea <= self.error:
                 return data

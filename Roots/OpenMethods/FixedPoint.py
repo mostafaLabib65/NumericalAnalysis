@@ -37,8 +37,10 @@ class FixedPoint(OpenMethod):
             data.append(record)
             self.root = root
 
-            if abs(root) > abs(old_root) and itr > 0:
+            if abs(self.compute(root)) > abs(self.compute(old_root)) and itr > 0:
                 divergence_count += 1
+            else:
+                divergence_count = 0
 
             if ea <= self.error:
                 return data
