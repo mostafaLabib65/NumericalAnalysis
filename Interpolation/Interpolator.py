@@ -7,6 +7,7 @@ class Interpolator:
     def __init__(self, values, order):
         self.values = values
         self.order = order
+        self.transpose()
         self.sort()
         self.splice()
 
@@ -36,4 +37,7 @@ class Interpolator:
                     self.values[i + 1][1] = temp
 
                     flag = True
+
+    def transpose(self):
+        self.values = np.transpose(self.values)
 
