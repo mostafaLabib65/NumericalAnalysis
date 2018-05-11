@@ -1,7 +1,7 @@
 from views.Result import Result
 from LinearEquation.GaussJordan import GaussJordan
 from views.FileParameters import FileParameters
-
+import numpy as np
 
 class GaussSolver:
     def __init__(self, observer, eq_str):
@@ -15,7 +15,9 @@ class GaussSolver:
             data[i] = data[i].split()
             for j in range(0, len(data[i])):
                 data[i][j] = float(data[i][j])
-        gauss = GaussJordan(data)
+
+        values = np.asarray(data)
+        gauss = GaussJordan(values)
         roots = gauss.solve()
         self.result = Result(solution=roots, status="I am status Groot",
                              message="We are groot")
