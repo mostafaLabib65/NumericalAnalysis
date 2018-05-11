@@ -14,6 +14,7 @@ from controllers.rootsMethodFactory import RootsMethodFactory
 from controllers.gaussGordanFactory import GaussGordan
 from models.fixedpointplot import FixedPointPlot
 from views.Observer import Observer
+from controllers.interpolation import InterPolationFactory
 from views.FileParameters import FileParameters as fp
 ys = [1, .81, .43, .25, .04, 0, .04, .25, .43, .81, 1]
 xs = [-1, -.9, -.656, -.5, -.2, 0, .2, .5, .656, .9, 1]
@@ -24,6 +25,7 @@ class MainWindow(QMainWindow, Observer):
     stepSolveFlag = 0
     choosedFileFlag = 0
     gaussGordanFlag = 0
+    interpolationFlag = 0
     parameters = fp(method="", equation="",start="", End= "",tolerance="", maxItr="")
     result = []
     index = -1
@@ -43,8 +45,12 @@ class MainWindow(QMainWindow, Observer):
         self.step.clicked.connect(self.step_btn_clicked)
         self.gaussSolve.clicked.connect(self.gauss_Btn_Clicked)
         self.GaussWidget.setHidden(not self.GaussWidget.isHidden())
+        self.interpolationWidget.setHidden(not self.interpolationWidget.isHidden())
         self.next.clicked.connect(self.update_step_ui)
         self.chooseFile.clicked.connect(self.readFromFile)
+        self.gaussChooseFile.clicked.connect(self.readFromFile)
+        self.interSolve.clicked.connect(self.interpolation_Btn_Clicked)
+        self.interChooseFile.clicked.connect(self.readFromFile)
         self.show()
 
     def animate_btn_clicked(self):
@@ -127,7 +133,7 @@ class MainWindow(QMainWindow, Observer):
             self.update_step_ui()
 
     def notifyFileParameters(self,parameters):
-        if(self.gaussGordanFlag == 0):
+        if(self.gaussGordanFlag == 0 and self.interpolationFlag == 0):
             self.parameters = parameters
             self.messageLabel.setText("File loaded")
             self.equationInput.setText(parameters.equation)
@@ -139,24 +145,34 @@ class MainWindow(QMainWindow, Observer):
             self.tolerance.setText(parameters.tolerance)
             self.maxIter.setText(parameters.maxItr)
         elif(self.gaussGordanFlag == 1):
-            for i in self.parameters.equation:
-                self.gaussInput.append(i + "\n")
+            self.parameters = parameters
+            self.gaussInput.append(parameters.equation)
+        elif(self.interpolationFlag == 1):
+            self.parameters = parameters
+            index = self.comboBox.findText(parameters.method, QtCore.Qt.MatchFixedString)
+            if index >= 0:
+                self.comboBox.setCurrentIndex(index)
+            self.pointsEditor.setText(parameters.equation)
+            self.xInput.setText(parameters.start)
+            self.yInput.setText(parameters.End)
+            self.pointsText.setText(parameters.tolerance)
         self.update()
 
 
     def update_ui(self, result):
         self.setStatusTip(result.status)
-        if(self.gaussGordanFlag == 0):
+        if(self.gaussGordanFlag == 0 and self.interpolationFlag == 0):
             self.solutionBrowser.setText(str(result.solution) + "\n" + str(result.iterations))
-        elif(self.gaussGordanFlag == 1):
-            self.gaussSolution.setText(str(result.solution))
-        self.messageLabel.setText(result.message)
-        if(self.gaussGordanFlag == 0):
             self.plotLayout.removeWidget(self.fig)
             self.fig = result.figure
             self.plotLayout.insertWidget(0, self.fig)
+        elif(self.gaussGordanFlag == 1):
+            self.gaussSolution.setText(str(result.solution))
+        elif(self.interpolationFlag == 1):
+            self.outPut.setText(str(result.solution))
         if(self.methodsCombo.currentText() != "Bierge Vieta"):
             self.animatebtn.setEnabled(True)
+        self.messageLabel.setText(result.message)
         self.update()
 
     def update_step_ui(self):
@@ -219,15 +235,26 @@ class MainWindow(QMainWindow, Observer):
 
     def on_modesCombo_changed(self):
         if(self.modes.currentText() == "Roots"):
-            self.dockWidgetContents.setVisible(True)
             self.gaussGordanFlag = 0
+            self.interpolationFlag = 0
+            self.dockWidgetContents.setVisible(True)
             self.GaussWidget.setHidden(True)
+            self.interpolationWidget.setHidden(True)
             self.RootsWidget.setVisible(True)
         elif(self.modes.currentText() == "Gauss jourdan"):
-            self.dockWidgetContents.setHidden(True)
             self.gaussGordanFlag = 1
+            self.interpolationFlag = 0
+            self.dockWidgetContents.setHidden(True)
             self.RootsWidget.setHidden(True)
+            self.interpolationWidget.setHidden(True)
             self.GaussWidget.setVisible(True)
+        elif(self.modes.currentText() == "Interpolation"):
+            self.gaussGordanFlag = 0
+            self.interpolationFlag = 1
+            self.dockWidgetContents.setHidden(True)
+            self.GaussWidget.setHidden(True)
+            self.RootsWidget.setHidden(True)
+            self.interpolationWidget.setVisible(True)
 
     def gauss_Btn_Clicked(self):
         if (self.choosedFileFlag == 0):
@@ -237,15 +264,27 @@ class MainWindow(QMainWindow, Observer):
             self.choosedFileFlag == 0
             method = GaussGordan.acquire_method(self, self.parameters.equation)
             method.execute()
+    def interpolation_Btn_Clicked(self):
+        if (self.choosedFileFlag == 0):
+            method = InterPolationFactory.acquire_method(self.methodsCombo.currentText(),self,self.pointsEditor.text(),
+                                                         self.xInput.text(),self.yInput.text(), self.pointsText.text())
+            method.execute()
+        else:
+            self.choosedFileFlag == 0
+            method = GaussGordan.acquire_method(self.parameters.method, self,self.parameters.equation,self.parameters.start,
+                                                self.parameters.End,self.parameters.tolerance)
+            method.execute()
 
     def readFromFile(self):
         global choosedFileFlag
         choosedFileFlag = 1
         filename = QtWidgets.QFileDialog.getOpenFileName(parent=self, caption='Open file')
-        if(self.gaussGordanFlag != 1):
+        if(self.gaussGordanFlag != 1 and self.interpolationFlag != 1):
             reading = RootsMethodFactory.readFromFile(filename[0], self)
         elif(self.gaussGordanFlag == 1):
             reading = GaussGordan.readFromFile(filename[0], self)
+        elif(self.interpolationFlag == 1):
+            reading = InterPolationFactory.readFromFile(filename[0], self)
 
 if __name__ == "__main__":
     import sys
