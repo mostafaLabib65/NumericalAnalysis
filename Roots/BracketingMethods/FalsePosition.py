@@ -45,7 +45,7 @@ class FalsePosition(Bracketer):
             data.append(record)
 
             if ea < self.error and itr > 1:
-                self.check(root, data)
+                self.check(root, ea)
                 return data
 
             old_root = root
@@ -61,5 +61,5 @@ class FalsePosition(Bracketer):
                 return data
 
             itr = itr + 1
-        self.check(root, data)
+        self.check(root, ea)
         return data

@@ -41,10 +41,12 @@ class Newton(OpenMethod):
                 divergence_count = 0
 
             if ea <= self.error:
+                self.check(root, ea)
                 return data
             old_root = root
             xi = root
             itr = itr + 1
+        self.check(root, ea)
         return data
 
     def newton_method1(self, xi):
