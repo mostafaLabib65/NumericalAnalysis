@@ -35,7 +35,7 @@ class OpenMethod:
         if length > 0:
             x = np.arange(self.root - length - 1, self.initial + 1, 0.1)
         else:
-            x = np.arange(self.initial - 1, self.root + length + 1, 0.1)
+            x = np.arange(self.initial - 1, self.root + abs(length) + 1, 0.1)
         for i in x:
             y.append(self.compute(i))
 
