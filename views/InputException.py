@@ -3,7 +3,7 @@ class InputException(Exception):
         self.message = message
 
     def __str__(self) -> str:
-        return super().__str__() + self.message
+        return self.message
 
     def getMessage(self):
         return self.message
