@@ -28,7 +28,7 @@ class Bisection(Bracketer):
             ea = abs(root - old_root)
             rel = abs(ea / root) * 100
 
-            record = np.array([itr, lower_bound, f_lower, upper_bound, f_upper, root, f_root, ea, rel])
+            record = np.array([itr + 1, lower_bound, f_lower, upper_bound, f_upper, root, f_root, ea, rel])
             data.append(record)
 
             if ea < self.error and itr > 1:

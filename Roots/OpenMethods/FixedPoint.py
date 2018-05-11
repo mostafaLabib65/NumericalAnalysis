@@ -33,7 +33,7 @@ class FixedPoint(OpenMethod):
             ea = abs(root - old_root)
             rel = abs(ea / root) * 100
 
-            record = np.array([itr, xi, root, self.compute(root), ea, rel])
+            record = np.array([itr + 1, xi, root, self.compute(root), ea, rel])
             data.append(record)
             self.root = root
 
@@ -43,7 +43,7 @@ class FixedPoint(OpenMethod):
                 divergence_count = 0
 
             if ea <= self.error:
-                self.check(root,data)
+                self.check(root, data)
                 return data
             old_root = root
             xi = root

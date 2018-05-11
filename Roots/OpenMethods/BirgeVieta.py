@@ -32,7 +32,7 @@ class BirgeVieta(OpenMethod):
             ea = abs(root - old_root)
             rel = abs(ea / root) * 100
 
-            record = np.array([itr, b_list, c_list, xi, root, ea, rel])
+            record = np.array([itr + 1, b_list, c_list, xi, root, ea, rel])
             data.append(record)
 
             if abs(self.compute(root)) > abs(self.compute(old_root)) and itr > 0:

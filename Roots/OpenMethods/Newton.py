@@ -31,11 +31,11 @@ class Newton(OpenMethod):
             ea = abs(root - old_root)
             rel = abs(ea / root) * 100
 
-            record = np.array([itr, xi, f_xi, derivative_xi, root, self.compute(root), ea, rel])
+            record = np.array([itr + 1, xi, f_xi, derivative_xi, root, self.compute(root), ea, rel])
             data.append(record)
             self.root = root
 
-            if abs(self.compute(root)) > abs(self.compute(old_root)) and itr > 0:
+            if abs(self.compute(root)) > abs(self.compute(old_root)) and itr > 1:
                 divergence_count += 1
             else:
                 divergence_count = 0
