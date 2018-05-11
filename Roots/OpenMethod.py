@@ -46,5 +46,9 @@ class OpenMethod:
         return
 
     def check(self, root, data):
-        if not(abs(self.compute(root)) < self.error):
-            raise Exception("Could not find root", data)
+        if self.gx is None:
+            if not(abs(self.compute(root)) < self.error):
+                raise Exception("Could not find root", data)
+        else:
+            if not(abs(self.compute(root) - root) < self.error):
+                raise Exception("Could not find root", data)
