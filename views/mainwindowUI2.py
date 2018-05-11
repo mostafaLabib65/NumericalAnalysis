@@ -175,9 +175,9 @@ class MainWindow(QMainWindow, Observer):
             if index >= 0:
                 self.comboBox.setCurrentIndex(index)
             self.pointsEditor.setText(parameters.equation)
-            self.xInput.setText(parameters.start)
-            self.yInput.setText(parameters.End)
-            self.pointsText.setText(parameters.tolerance)
+            self.xInput.setText(parameters.start[1:len(parameters.start) -1])
+            self.yInput.setText(parameters.End[1:len(parameters.End) -1])
+            self.pointsText.setText(parameters.tolerance[1:len(parameters.tolerance) -1])
         self.update()
 
     def update_ui(self, result):

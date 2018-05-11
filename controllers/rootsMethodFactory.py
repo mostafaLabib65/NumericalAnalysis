@@ -266,7 +266,8 @@ class RootsMethodFactory:
             lines = f.readlines()
         for i in range(0, len(lines)):
             lines[i] = lines[i].strip("\n")
-        interval = lines[3].split()
+        line = lines[3][1:len(lines[3])-1]
+        interval = line.split()
         if (len(interval) != 2):
             end = 0
         else:

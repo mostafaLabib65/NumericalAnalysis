@@ -29,7 +29,8 @@ class NewtonDivided(Interpolator):
                 b[k][i - 1] = (b[k-1][i] - b[k-1][i - 1]) / b[k][i - 1]
         inter = b[1][0]
         mul = 1
-        for i in range(n - 1):
-            mul *= (x - b[0][i])
+        for i in range(1, n):
+            mul *= (x - b[0][i-1])
+            y = b[i+1][0]
             inter += b[i+1][0] * mul
         return inter
