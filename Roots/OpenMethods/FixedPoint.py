@@ -14,14 +14,11 @@ class FixedPoint(OpenMethod):
         return self.fixed_point(xi)
 
     def fixed_point(self, xi):
-        old_root, itr, root, rel, divergence_count = 0, 0, 0, 0, 0
+        old_root, itr, root, rel, divergence_count, ea = 0, 0, 0, 0, 0, 0
 
         derivative = self.compute_derivative(xi)
         if self.gx is None:
             derivative += 1
-
-        if abs(derivative) > 1:
-            raise Exception("Function will diverge")
 
         data = []
         while itr < self.max_iterations:
@@ -43,10 +40,10 @@ class FixedPoint(OpenMethod):
                 divergence_count = 0
 
             if ea <= self.error:
-                self.check(root, data)
+                self.check(root, ea)
                 return data
             old_root = root
             xi = root
             itr = itr + 1
-        self.check(root, data)
+        self.check(root, ea)
         return data

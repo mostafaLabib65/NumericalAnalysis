@@ -13,7 +13,7 @@ class FalsePosition(Bracketer):
         return self.false_pos(lower_bound, upper_bound)
 
     def false_pos(self, lower_bound, upper_bound):
-        itr, old_root, root, rel = 0, 0, 0, 0
+        itr, old_root, root, rel, ea = 0, 0, 0, 0, 0
         lower_bound_stuck, upper_bound_stuck = 0, 0
 
         data = []
@@ -21,6 +21,10 @@ class FalsePosition(Bracketer):
         while itr < self.max_iterations:
             f_lower = self.compute(lower_bound)
             f_upper = self.compute(upper_bound)
+
+            if f_lower > 0:
+                lower_bound, upper_bound = upper_bound, lower_bound
+                f_lower, f_upper = f_upper, f_lower
 
             if f_lower * f_upper > 0:
                 raise Exception("No valid roots in this interval")
@@ -41,7 +45,7 @@ class FalsePosition(Bracketer):
             data.append(record)
 
             if ea < self.error and itr > 1:
-                self.check(root, data)
+                self.check(root, ea)
                 return data
 
             old_root = root
@@ -57,5 +61,5 @@ class FalsePosition(Bracketer):
                 return data
 
             itr = itr + 1
-        self.check(root, data)
+        self.check(root, ea)
         return data

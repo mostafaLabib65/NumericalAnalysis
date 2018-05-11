@@ -13,7 +13,7 @@ class BirgeVieta(OpenMethod):
         return self.birge_vieta(xi)
 
     def birge_vieta(self, xi):
-        old_root, itr, root, rel, divergence_count = 0, 0, 0, 0, 0
+        old_root, itr, root, rel, divergence_count, ea = 0, 0, 0, 0, 0, 0
         data = []
         while itr < self.max_iterations:
 
@@ -41,12 +41,12 @@ class BirgeVieta(OpenMethod):
                 divergence_count = 0
 
             if ea <= self.error:
-                self.check(root, data)
+                self.check(root, ea)
                 return data
             old_root = root
             xi = root
             itr = itr + 1
-        self.check(root, data)
+        self.check(root, ea)
         return data
 
     def get_b(self, xi):

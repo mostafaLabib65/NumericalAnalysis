@@ -100,6 +100,8 @@ class MainWindow(QMainWindow, Observer):
             method.execute()
         except Exception as ex:
             self.setStatusTip(ex.__str__())
+            self.app.processEvents()
+
 
     def step_btn_clicked(self):
         parameters = self.prepare_parameters()
@@ -112,14 +114,13 @@ class MainWindow(QMainWindow, Observer):
         except InputException as ex:
             self.setStatusTip(ex.getMessage())
             return
-
-
         try:
             method = RootsMethodFactory.acquire_method(**parameters)
             self.next.setEnabled(True)
             method.execute()
         except Exception as ex:
             self.setStatusTip(ex.__str__())
+            self.app.processEvents()
 
     def notify(self, result):
         if self.stepSolveFlag == 0:

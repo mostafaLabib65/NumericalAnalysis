@@ -26,7 +26,6 @@ class FixedPointPlot(PlotFigure):
         self.axes.plot(self.xs, self.xs, label='x=y', color='y', lw=3)
         self.axes.legend
 
-
     def animate(self):
         self.animateTimer.start(100)
 
