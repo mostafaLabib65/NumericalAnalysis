@@ -12,6 +12,11 @@ class Bisection(Bracketer):
         self.lower = lower_bound
         return self.bisect(lower_bound, upper_bound)
 
+    @staticmethod
+    def get_headers():
+        return ["Iterations", "Lower Bound", "F of Lower", "Upper Bound", "F of Upper", "Root", "F of Root",
+                "Absolute Error"]
+
     def bisect(self, lower_bound, upper_bound):
         itr, old_root, root, ea = 0, 0, 0, 0
         f_lower = self.compute(lower_bound)

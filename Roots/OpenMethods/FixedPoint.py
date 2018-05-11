@@ -13,6 +13,10 @@ class FixedPoint(OpenMethod):
             self.function.function = sp.sympify((str(self.function.function) + " + x"))
         return self.fixed_point(xi)
 
+    @staticmethod
+    def get_headers():
+        return ["Iterations", "X(i)", "Root", "G of Root", "Absolute Error"]
+
     def fixed_point(self, xi):
         old_root, itr, root, divergence_count, ea = 0, 0, 0, 0, 0
 

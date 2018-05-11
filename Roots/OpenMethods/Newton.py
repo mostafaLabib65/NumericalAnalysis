@@ -15,6 +15,10 @@ class Newton(OpenMethod):
             return self.newton_method1(xi)
         return self.newton(xi)
 
+    @staticmethod
+    def get_headers():
+        return ["Iterations", "X(i)", "F of X(i)", "F' of X(i)", "Root", "F of Root", "Absolute Error"]
+
     def newton(self, xi):
         old_root, itr, root, divergence_count, ea = 0, 0, 0, 0, 0
         data = []
