@@ -27,6 +27,7 @@ class Bracketer:
         return
 
     def check(self, root, data):
-        if not(abs(self.compute(root)) < self.error):
+        y = self.compute(root)
+        if not(abs(self.compute(root)) < 10*self.error):
             raise Exception("Could not find root", data)
 
