@@ -23,9 +23,9 @@ class Bisection(object):
         self.observer = observer
         self.eq_str = eq_str
         diff = Differentiator(eq_str)
-        if(tolerance == ""):
+        if (tolerance == ""):
             tolerance = 0.0001
-        if(maxItr == ""):
+        if (maxItr == ""):
             maxItr = 50.0
         bis = bisector(diff.get_function(), float(tolerance), int(maxItr))
         start = float(start_str)
