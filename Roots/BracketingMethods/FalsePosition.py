@@ -13,7 +13,7 @@ class FalsePosition(Bracketer):
         return self.false_pos(lower_bound, upper_bound)
 
     def false_pos(self, lower_bound, upper_bound):
-        itr, old_root, root, rel, ea = 0, 0, 0, 0, 0
+        itr, old_root, root, ea = 0, 0, 0, 0
         lower_bound_stuck, upper_bound_stuck = 0, 0
 
         data = []
@@ -29,7 +29,7 @@ class FalsePosition(Bracketer):
             if f_lower * f_upper > 0:
                 raise Exception("No valid roots in this interval")
             if f_upper - f_lower == 0:
-                raise Exception("Division by zero", root, itr, rel)
+                raise Exception("Division by zero", data)
 
             if abs(upper_bound_stuck) == 20 or abs(lower_bound_stuck) == 20:
                 root = (lower_bound + upper_bound) / 2
@@ -39,9 +39,8 @@ class FalsePosition(Bracketer):
             f_root = self.compute(root)
 
             ea = abs(root - old_root)
-            rel = abs(ea / root) * 100
 
-            record = np.array([itr, lower_bound, f_lower, upper_bound, f_upper, root, f_root, ea, rel])
+            record = np.array([itr, lower_bound, f_lower, upper_bound, f_upper, root, f_root, ea])
             data.append(record)
 
             if ea < self.error and itr > 1:

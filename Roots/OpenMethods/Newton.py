@@ -16,7 +16,7 @@ class Newton(OpenMethod):
         return self.newton(xi)
 
     def newton(self, xi):
-        old_root, itr, root, rel, divergence_count, ea = 0, 0, 0, 0, 0, 0
+        old_root, itr, root, divergence_count, ea = 0, 0, 0, 0, 0
         data = []
         while itr < self.max_iterations:
 
@@ -29,9 +29,8 @@ class Newton(OpenMethod):
             f_xi = self.compute(xi)
             root = float(xi - (f_xi / derivative_xi))
             ea = abs(root - old_root)
-            rel = abs(ea / root) * 100
 
-            record = np.array([itr + 1, xi, f_xi, derivative_xi, root, self.compute(root), ea, rel])
+            record = np.array([itr + 1, xi, f_xi, derivative_xi, root, self.compute(root), ea])
             data.append(record)
             self.root = root
 
