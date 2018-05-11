@@ -15,11 +15,10 @@ class Bracketer:
         return self.function.evaluate(xr)
 
     def get_plot(self):
-        x = np.arange(self.lower, self.upper+1, 0.1)
+        x = np.arange(self.lower, self.upper + 1, 0.1)
         y = []
         for i in x:
-         y.append(self.compute(i))
-
+            y.append(self.compute(i))
         return x, y
 
     @abc.abstractclassmethod
@@ -28,6 +27,5 @@ class Bracketer:
 
     def check(self, root, err):
         y = self.compute(root)
-        if not(abs(self.compute(root)) < 10*self.error):
+        if not (abs(self.compute(root)) < 10 * self.error):
             raise Exception("Last found root is: " + str(root) + " with error:" + str(err))
-
