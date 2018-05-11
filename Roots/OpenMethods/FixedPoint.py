@@ -20,9 +20,6 @@ class FixedPoint(OpenMethod):
         if self.gx is None:
             derivative += 1
 
-        if abs(derivative) > 1:
-            raise Exception("Function will diverge")
-
         data = []
         while itr < self.max_iterations:
 
