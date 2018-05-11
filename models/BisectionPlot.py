@@ -63,7 +63,7 @@ class BisectionPlot(PlotFigure):
 
     def animateLine(self,x1, x2, constX, xs, ys):
         self.axes.cla()
-        x = np.linspace(x1, x2, 20)
+        x = np.linspace(float(x1), float(x2), 20)
 
         for n in range(len(x)):
             self.axes.cla()
