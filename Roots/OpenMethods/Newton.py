@@ -16,7 +16,7 @@ class Newton(OpenMethod):
         return self.newton(xi)
 
     def newton(self, xi):
-        old_root, itr, root, rel, divergence_count = 0, 0, 0, 0, 0
+        old_root, itr, root, rel, divergence_count, ea = 0, 0, 0, 0, 0, 0
         data = []
         while itr < self.max_iterations:
 

@@ -14,7 +14,7 @@ class FixedPoint(OpenMethod):
         return self.fixed_point(xi)
 
     def fixed_point(self, xi):
-        old_root, itr, root, rel, divergence_count = 0, 0, 0, 0, 0
+        old_root, itr, root, rel, divergence_count, ea = 0, 0, 0, 0, 0, 0
 
         derivative = self.compute_derivative(xi)
         if self.gx is None:

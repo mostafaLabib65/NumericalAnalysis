@@ -13,7 +13,7 @@ class FalsePosition(Bracketer):
         return self.false_pos(lower_bound, upper_bound)
 
     def false_pos(self, lower_bound, upper_bound):
-        itr, old_root, root, rel = 0, 0, 0, 0
+        itr, old_root, root, rel, ea = 0, 0, 0, 0, 0
         lower_bound_stuck, upper_bound_stuck = 0, 0
 
         data = []

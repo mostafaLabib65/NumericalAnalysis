@@ -13,7 +13,7 @@ class Bisection(Bracketer):
         return self.bisect(lower_bound, upper_bound)
 
     def bisect(self, lower_bound, upper_bound):
-        itr, old_root, root, rel = 0, 0, 0, 0
+        itr, old_root, root, rel, ea = 0, 0, 0, 0, 0
         f_lower = self.compute(lower_bound)
         f_upper = self.compute(upper_bound)
 

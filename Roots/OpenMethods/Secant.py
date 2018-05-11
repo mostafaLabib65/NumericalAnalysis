@@ -11,7 +11,7 @@ class Secant(OpenMethod):
         return self.secant(xi, xi_1)
 
     def secant(self, xi, xi_1):
-        old_root, itr, root, rel, divergence_count = 0, 0, 0, 0, 0
+        old_root, itr, root, rel, divergence_count, ea = 0, 0, 0, 0, 0, 0
         data = []
         while itr < self.max_iterations:
             if divergence_count > 15:
