@@ -175,9 +175,9 @@ class MainWindow(QMainWindow, Observer):
             if index >= 0:
                 self.comboBox.setCurrentIndex(index)
             self.pointsEditor.setText(parameters.equation)
-            self.xInput.setText(parameters.start[1:len(parameters.start) -1])
-            self.yInput.setText(parameters.End[1:len(parameters.End) -1])
-            self.pointsText.setText(parameters.tolerance[1:len(parameters.tolerance) -1])
+            self.xInput.setText(parameters.start[1:len(parameters.start) - 1])
+            self.yInput.setText(parameters.End[1:len(parameters.End) - 1])
+            self.pointsText.setText(parameters.tolerance[1:len(parameters.tolerance) - 1])
         self.update()
 
     def update_ui(self, result):
@@ -186,16 +186,17 @@ class MainWindow(QMainWindow, Observer):
         self.statusBar().showMessage(result.status)
         if self.gaussGordanFlag == 0 and self.interpolationFlag == 0:
             if result.iterations != None:
-                self.solutionBrowser.setText(str(result.solution) + "\n" + str(result.iterations))
+                self.solutionBrowser.setText(
+                    "Root = " + str(result.solution) + "\nNumber of Iteration: " + str(result.iterations))
             else:
-                self.solutionBrowser.setText(str(result.solution))
+                self.solutionBrowser.setText("Root = " + str(result.solution))
             self.plotLayout.removeWidget(self.figure)
             self.figure = result.figure
             self.plotLayout.insertWidget(0, self.figure)
         elif self.gaussGordanFlag == 1:
-            self.gaussSolution.setText(str(result.solution))
+            self.gaussSolution.setText("Root =" + str(result.solution))
         elif self.interpolationFlag == 1:
-            self.outPut.setText(str(result.solution))
+            self.outPut.setText("Root =" + str(result.solution))
         if self.methodsCombo.currentText() != "Bierge Vieta":
             self.animatebtn.setEnabled(True)
         self.messageLabel.setText(result.message)
@@ -211,12 +212,18 @@ class MainWindow(QMainWindow, Observer):
             self.messageLabel.setText(self.result.message)
             self.index += 1
         elif self.index == 0:
-            self.solutionBrowser.setText(str(self.result.data[0]))
+            self.solutionBrowser.setText(self.formatData(self.result.data[0]))
             self.index += 1
         else:
             if self.index != len(self.result.data):
-                self.solutionBrowser.append("\n" + str(self.result.data[self.index]))
+                self.solutionBrowser.append("\n" + self.formatData(self.result.data[self.index]))
                 self.index += 1
+
+    def formatData(self, row):
+        row_str = ""
+        for item in row:
+            row_str += "{:8.4f}".format(float(item))
+        return row_str
 
     def update_step_plot(self, result):
         self.plotLayout.removeWidget(self.figure)
@@ -310,13 +317,17 @@ class MainWindow(QMainWindow, Observer):
         global chosenFileFlag
         chosenFileFlag = 1
         filename = QtWidgets.QFileDialog.getOpenFileName(parent=self, caption='Open file')
-        if self.gaussGordanFlag != 1 and self.interpolationFlag != 1:
-            reading = RootsMethodFactory.readFromFile(filename[0], self, widget=self.dockWidget, app=self.app)
-        elif self.gaussGordanFlag == 1:
-            reading = GaussGordan.readFromFile(filename[0], self, widget=self.dockWidget, app=self.app)
-        elif self.interpolationFlag == 1:
-            reading = InterPolationFactory.readFromFile(filename[0], self, widget=self.dockWidget, app=self.app)
-
+        try:
+            if self.gaussGordanFlag != 1 and self.interpolationFlag != 1:
+                reading = RootsMethodFactory.readFromFile(filename[0], self, widget=self.dockWidget, app=self.app)
+            elif self.gaussGordanFlag == 1:
+                reading = GaussGordan.readFromFile(filename[0], self, widget=self.dockWidget, app=self.app)
+            elif self.interpolationFlag == 1:
+                reading = InterPolationFactory.readFromFile(filename[0], self, widget=self.dockWidget, app=self.app)
+        except Exception as ex:
+            self.statusBar().clearMessage()
+            self.setStyleSheet(error_style)
+            self.statusBar().showMessage(ex.__str__())
 
 if __name__ == "__main__":
     import sys
