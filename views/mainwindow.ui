@@ -28,7 +28,7 @@
         <rect>
          <x>10</x>
          <y>0</y>
-         <width>551</width>
+         <width>663</width>
          <height>435</height>
         </rect>
        </property>
@@ -93,7 +93,7 @@
         <rect>
          <x>10</x>
          <y>0</y>
-         <width>551</width>
+         <width>750</width>
          <height>541</height>
         </rect>
        </property>
@@ -248,9 +248,6 @@
           </property>
          </widget>
         </item>
-        <item row="10" column="1">
-         <widget class="QTextBrowser" name="solutionBrowser"/>
-        </item>
         <item row="11" column="0">
          <spacer name="horizontalSpacer">
           <property name="orientation">
@@ -284,6 +281,19 @@
          <widget class="QLabel" name="messageLabel">
           <property name="text">
            <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="10" column="0" colspan="2">
+         <widget class="QTextBrowser" name="solutionBrowser">
+          <property name="minimumSize">
+           <size>
+            <width>720</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="sizeAdjustPolicy">
+           <enum>QAbstractScrollArea::AdjustToContents</enum>
           </property>
          </widget>
         </item>
@@ -462,7 +472,7 @@
      <x>0</x>
      <y>0</y>
      <width>1048</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

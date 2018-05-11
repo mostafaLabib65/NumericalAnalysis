@@ -39,12 +39,12 @@ class Bisection(object):
             xl.append(i[1])
             xu.append(i[3])
             xr.append(i[5])
-        lastIterationData = data[len(data) -1 ]
+        lastIterationData = data[len(data) - 1]
         solution = lastIterationData[5]
         iterations = lastIterationData[0]
         self.fig = BisectionPlot(xs, ys, xr, xl, xu, *args, **kwargs)
         self.result = Result(solution=str(solution), status="I am status Groot", figure=self.fig, iterations=iterations,
-                             message="We are groot", data=data)
+                             message="We are groot", data=data, headers=bisector.get_headers())
 
     def execute(self):
         self.observer.notify(self.result)
@@ -74,12 +74,12 @@ class FalsePosition(object):
             xr.append(i[5])
             Fxl.append((i[2]))
             Fxu.append(i[4])
-        lastIterationData = data[len(data)-1]
+        lastIterationData = data[len(data) - 1]
         solution = lastIterationData[5]
         iterations = lastIterationData[0]
         self.fig = FalsePositionPlot(xs, ys, xr, xl, Fxl, xu, Fxu, *args, **kwargs)
         self.result = Result(solution=str(solution), status="I am status Groot", figure=self.fig, iterations=iterations,
-                             message="We are groot", data=data)
+                             message="We are groot", data=data, headers=falsePositioner.get_headers())
 
     def execute(self):
         self.observer.notify(self.result)
@@ -109,12 +109,12 @@ class BirgeVieta(object):
             xr.append(i[5])
             Fxl.append((i[2]))
             Fxu.append(i[4])'''
-        lastIterationData = data[len(data) -1]
+        lastIterationData = data[len(data) - 1]
         solution = lastIterationData[4]
         iterations = lastIterationData[0]
         self.fig = NormalFunction(xs, ys)
         self.result = Result(solution=str(solution), status="I am status Groot", figure=self.fig, iterations=iterations,
-                             message="We are groot", data=data)
+                             message="We are groot", data=data, headers=birgeVietaer.get_headers())
 
     def execute(self):
         self.observer.notify(self.result)
@@ -138,12 +138,12 @@ class FixedPoint(object):
         for i in data:
             xi.append(i[1])
             gx.append(i[2])
-        lastIterationData = data[len(data) -1]
+        lastIterationData = data[len(data) - 1]
         solution = lastIterationData[3]
         iterations = lastIterationData[0]
         self.fig = FixedPointPlot(xs, ys, gx, xi, *args, **kwargs)
         self.result = Result(solution=str(solution), status="done", figure=self.fig, iterations=iterations,
-                             message="We are groot", data=data)
+                             message="We are groot", data=data,headers= fixedPointer.get_headers())
 
     def execute(self):
         self.observer.notify(self.result)
@@ -170,12 +170,12 @@ class Newton(object):
             xr.append(float(i[4]))
             x.append(float(i[1]))
             fx.append(float(i[2]))
-        lastIterationData = data[len(data) -1]
+        lastIterationData = data[len(data) - 1]
         solution = lastIterationData[4]
         iterations = lastIterationData[0]
         self.fig = NewtonRaphsonPlot(xs, ys, xr, x, fx, *args, **kwargs)
         self.result = Result(solution=str(solution), status="done", figure=self.fig, iterations=iterations,
-                             message="We are groot", data=data)
+                             message="We are groot", data=data, headers=newKg.get_headers())
 
     def execute(self):
         self.observer.notify(self.result)
@@ -205,12 +205,12 @@ class Secant(object):
             fxl.append(float(i[2]))
             xbl.append(float(i[3]))
             fxbl.append(float(i[4]))
-        lastIterationData = data[len(data) -1]
+        lastIterationData = data[len(data) - 1]
         solution = lastIterationData[5]
         iterations = lastIterationData[0]
         self.fig = SecantPlot(xs, ys, xr, xl, fxl, xbl, fxbl, *args, **kwargs)
         self.result = Result(solution=str(solution), status="done", figure=self.fig, iterations=iterations,
-                             message="We are groot", data=data)
+                             message="We are groot", data=data, headers=secant.get_headers())
 
     def execute(self):
         self.observer.notify(self.result)
@@ -229,12 +229,12 @@ class General(object):
         solution = ""
         for i in roots:
             s = len(i)
-            l = i[len(i) -1]
+            l = i[len(i) - 1]
             l = l[5]
             solution = solution + str(l) + "\n"
         xs, ys = finder.get_plot()
         self.fig = NormalFunction(xs, ys)
-        self.result = Result(solution = solution,status="I am status Groot", figure=self.fig,
+        self.result = Result(solution=solution, status="I am status Groot", figure=self.fig,
                              message="We are groot")
 
     def execute(self):
@@ -266,7 +266,7 @@ class RootsMethodFactory:
             lines = f.readlines()
         for i in range(0, len(lines)):
             lines[i] = lines[i].strip("\n")
-        line = lines[3][1:len(lines[3])-1]
+        line = lines[3][1:len(lines[3]) - 1]
         interval = line.split()
         if (len(interval) != 2):
             end = 0

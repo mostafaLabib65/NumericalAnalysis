@@ -37,6 +37,7 @@ class MainWindow(QMainWindow, Observer):
     result = []
     index = -1
     time = 0
+
     def __init__(self, app):
         QMainWindow.__init__(self)
         self.app = app
@@ -116,7 +117,7 @@ class MainWindow(QMainWindow, Observer):
         try:
             time1 = datetime.datetime.now()
             method = RootsMethodFactory.acquire_method(**parameters)
-            time2 =datetime.datetime.now()
+            time2 = datetime.datetime.now()
             self.time = time2 - time1
             method.execute()
         except Exception as ex:
@@ -190,7 +191,8 @@ class MainWindow(QMainWindow, Observer):
         if self.gaussGordanFlag == 0 and self.interpolationFlag == 0:
             if result.iterations != None:
                 self.solutionBrowser.setText(
-                    "Root = " + str(result.solution) + "\nNumber of Iteration: " + str(result.iterations) + "\nTime  " + str(self.time)[2:])
+                    "Root = " + str(result.solution) + "\nNumber of Iteration: " + str(
+                        result.iterations) + "\nTime  " + str(self.time)[2:])
             else:
                 self.solutionBrowser.setText("Root = " + str(result.solution) + "\nTime" + str(self.time)[2:])
             self.plotLayout.removeWidget(self.figure)
@@ -212,20 +214,34 @@ class MainWindow(QMainWindow, Observer):
             self.statusBar().clearMessage()
             self.statusBar().showMessage(self.result.status)
             self.solutionBrowser.append("iterations = " + str(self.result.iterations))
+            self.width = max([len(i) for i in self.result.headers]) + 1
+            self.solutionBrowser.append(
+                self.formatDataStrings(self.result.headers, self.width))
             self.messageLabel.setText(self.result.message)
+            self.solutionBrowser.updateGeometry()
             self.index += 1
         elif self.index == 0:
-            self.solutionBrowser.setText(self.formatData(self.result.data[0]))
+            self.solutionBrowser.append(self.formatData(self.result.data[0], self.width))
+            self.solutionBrowser.updateGeometry()
             self.index += 1
         else:
             if self.index != len(self.result.data):
-                self.solutionBrowser.append("\n" + self.formatData(self.result.data[self.index]))
+                self.solutionBrowser.append("\n" + self.formatData(self.result.data[self.index], self.width))
+                self.solutionBrowser.updateGeometry()
                 self.index += 1
 
-    def formatData(self, row):
+    def formatDataStrings(self, row, width=8):
         row_str = ""
         for item in row:
-            row_str += "{:8.4f}".format(float(item))
+            row_str += ("%" + str(width) + "s") % (item)
+            row_str += "|"
+        return row_str
+
+    def formatData(self, row, width=8):
+        row_str = ""
+        for item in row:
+            row_str += ("{:" + str(width) + ".4f}").format(float(item))
+            row_str += "|"
         return row_str
 
     def update_step_plot(self, result):
@@ -337,6 +353,7 @@ class MainWindow(QMainWindow, Observer):
             self.statusBar().clearMessage()
             self.setStyleSheet(error_style)
             self.statusBar().showMessage(ex.__str__())
+
 
 if __name__ == "__main__":
     import sys
