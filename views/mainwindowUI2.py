@@ -7,7 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QMainWindow, QDockWidget, QVBoxLayout, QPushButton
+from PyQt5.QtWidgets import QMainWindow, QDockWidget, QVBoxLayout, QPushButton, QLabel
 from qtpy import QtGui, QtCore
 
 from controllers.rootsMethodFactory import RootsMethodFactory
@@ -23,6 +23,9 @@ ys = [1, .81, .43, .25, .04, 0, .04, .25, .43, .81, 1]
 xs = [-1, -.9, -.656, -.5, -.2, 0, .2, .5, .656, .9, 1]
 gx = [0.81, .656, .43, .1853, 0.03433, 0]
 x = [.9, 0.81, .656, .43, .1853, 0.03433]
+error_style = "QStatusBar{padding-left:8px;background:rgba(255,0,0,255);color:white;font-weight:bold;}"
+info_style = "QStatusBar{padding-left:8px;background:rgba(192,192,192,0.3);color:white;font-weight:bold;}"
+sucess = "QStatusBar{padding-left:8px;background:rgba(0,255,0,255);color:white;font-weight:bold;}"
 
 
 class MainWindow(QMainWindow, Observer):
@@ -57,6 +60,7 @@ class MainWindow(QMainWindow, Observer):
         self.gaussChooseFile.clicked.connect(self.readFromFile)
         self.interSolve.clicked.connect(self.interpolation_Btn_Clicked)
         self.interChooseFile.clicked.connect(self.readFromFile)
+        self.statusBar().show()
         self.show()
 
     def animate_btn_clicked(self):
@@ -92,16 +96,20 @@ class MainWindow(QMainWindow, Observer):
         try:
             self.check_error()
         except InputException as ex:
-            self.setStatusTip(ex.getMessage())
+            self.statusBar().setStyleSheet(error_style)
+            self.statusBar().clearMessage()
+            self.statusBar().showMessage(ex.__str__())
+            self.app.processEvents()
             return
 
         try:
             method = RootsMethodFactory.acquire_method(**parameters)
             method.execute()
         except Exception as ex:
-            self.setStatusTip(ex.__str__())
+            self.statusBar().setStyleSheet(error_style)
+            self.statusBar().clearMessage()
+            self.statusBar().showMessage(ex.__str__())
             self.app.processEvents()
-
 
     def step_btn_clicked(self):
         parameters = self.prepare_parameters()
@@ -112,14 +120,19 @@ class MainWindow(QMainWindow, Observer):
         try:
             self.check_error()
         except InputException as ex:
-            self.setStatusTip(ex.getMessage())
+            self.statusBar().setStyleSheet(error_style)
+            self.statusBar().clearMessage()
+            self.statusBar().showMessage(ex.__str__())
+            self.app.processEvents()
             return
         try:
             method = RootsMethodFactory.acquire_method(**parameters)
             self.next.setEnabled(True)
             method.execute()
         except Exception as ex:
-            self.setStatusTip(ex.__str__())
+            self.statusBar().setStyleSheet(error_style)
+            self.statusBar().clearMessage()
+            self.statusBar().showMessage(ex.__str__())
             self.app.processEvents()
 
     def notify(self, result):
@@ -157,7 +170,9 @@ class MainWindow(QMainWindow, Observer):
         self.update()
 
     def update_ui(self, result):
-        self.setStatusTip(result.status)
+        self.statusBar().setStyleSheet(sucess)
+        self.statusBar().clearMessage()
+        self.statusBar().showMessage(result.status)
         if self.gaussGordanFlag == 0 and self.interpolationFlag == 0:
             if result.iterations != None:
                 self.solutionBrowser.setText(str(result.solution) + "\n" + str(result.iterations))
@@ -178,7 +193,9 @@ class MainWindow(QMainWindow, Observer):
     def update_step_ui(self):
         if self.index == -1:
             self.messageLabel.setText(self.result.message)
-            self.setStatusTip(self.result.status)
+            self.statusBar().setStyleSheet(sucess)
+            self.statusBar().clearMessage()
+            self.statusBar().showMessage(self.result.status)
             self.solutionBrowser.append("iterations = " + str(self.result.iterations))
             self.messageLabel.setText(self.result.message)
             self.index += 1
